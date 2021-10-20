@@ -7,17 +7,31 @@ public class CameraCC : MonoBehaviour
     public int latence;
 
     private Transform target;
-    public Vector3 distance;
+    public bool worldMapType;
+    public bool interiorType;
+    public bool ExteriorType;
+    private Vector3 worldMapView;
+    private Vector3 InteriorView;
+    private Vector3 ExteriorView;
+    private Vector3 distance;
     private Vector3 positionCible;
     public static bool Teleport;
 
     // Use this for initialization
     void Start()
     {
+
+        worldMapView = new Vector3(0, 30, -9);
+        InteriorView = new Vector3(0, 11, -6);
+        ExteriorView = new Vector3(0, 6, -10);
+
         target = GameObject.Find("Player").GetComponent<Transform>();
         if (latence < 0)
             latence = 0;
-            Teleport=false;
+        
+        Teleport=false;
+
+        ChangeViewType();
     }
 
     // Update is called once per frame
@@ -26,9 +40,11 @@ public class CameraCC : MonoBehaviour
         //this.GetComponent<Transform>().position = target.position + distance;
         if (Teleport){
                 Tp();
-            }else {
-                Lerp();
-            }
+        }else {
+            Lerp();
+        }
+
+        //transform.LookAt(target);
         
     }
 
@@ -73,5 +89,35 @@ public class CameraCC : MonoBehaviour
             this.GetComponent<Transform>().position += new Vector3(0, 0, positionCible.z - this.GetComponent<Transform>().position.z) / latence;
         }
 
+    }
+
+    public void ChangeViewType()
+    {
+        if (worldMapType)
+        {
+            distance = worldMapView;
+            interiorType = false;
+            ExteriorType = false;
+
+            transform.eulerAngles = new Vector3(70, 0, 0);
+
+        }
+        else if (interiorType)
+        {
+            distance = InteriorView;
+            worldMapType = false;
+            ExteriorType = false;
+
+            transform.eulerAngles = new Vector3(55, 0, 0);
+
+        }
+        else if (ExteriorType)
+        {
+            distance = ExteriorView;
+            worldMapType = false;
+            interiorType = false;
+
+            transform.eulerAngles = new Vector3(30, 0, 0);
+        }
     }
 }
