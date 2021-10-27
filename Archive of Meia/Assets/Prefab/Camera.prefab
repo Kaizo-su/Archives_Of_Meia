@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3046525496330642755}
   - component: {fileID: 3046525496330642756}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 100
+  far clip plane: 150
   field of view: 65
   orthographic: 0
   orthographic size: 5
@@ -97,4 +97,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   latence: 20
-  distance: {x: 0, y: 11, z: -6}
+  worldMapType: 0
+  interiorType: 1
+  ExteriorType: 0

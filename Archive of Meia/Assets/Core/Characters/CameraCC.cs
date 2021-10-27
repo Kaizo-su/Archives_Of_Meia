@@ -10,7 +10,7 @@ public class CameraCC : MonoBehaviour
     public bool worldMapType;
     public bool interiorType;
     public bool ExteriorType;
-    private Vector3 worldMapView;
+    private Vector3 WorldMapView;
     private Vector3 InteriorView;
     private Vector3 ExteriorView;
     private Vector3 distance;
@@ -21,7 +21,7 @@ public class CameraCC : MonoBehaviour
     void Start()
     {
 
-        worldMapView = new Vector3(0, 30, -9);
+        WorldMapView = new Vector3(0, 30, -9);
         InteriorView = new Vector3(0, 11, -6);
         ExteriorView = new Vector3(0, 6, -10);
 
@@ -91,11 +91,35 @@ public class CameraCC : MonoBehaviour
 
     }
 
-    public void ChangeViewType()
+    public void changeViewTypeTo(byte type)
+    {
+        worldMapType = false;
+        interiorType = false;
+        ExteriorType = false;
+
+        switch (type)
+        {
+            case 1:
+                worldMapType = true;
+                break;
+            case 2:
+                interiorType = true;
+                break;
+            case 3:
+                ExteriorType = true;
+                break;
+            default:
+                break;
+        }
+
+        ChangeViewType();
+    }
+
+    private void ChangeViewType()
     {
         if (worldMapType)
         {
-            distance = worldMapView;
+            distance = WorldMapView;
             interiorType = false;
             ExteriorType = false;
 

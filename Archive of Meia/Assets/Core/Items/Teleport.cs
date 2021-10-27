@@ -8,6 +8,7 @@ public class Teleport : MonoBehaviour
 {
     public string Destination;
     public float orientation;
+    public byte typeView;       // 1 = WorldMap --- 2 = Interior --- 3 = Exterior
 
     private GameObject P;
     private GameObject G;
@@ -15,12 +16,15 @@ public class Teleport : MonoBehaviour
     private GameObject C;
     private GameObject D;
 
+    private GameObject Cam;
+
     // Start is called before the first frame update
     void Start()
     {
         P = GameObject.Find("Player");
         G = GameObject.Find("Character");
         C = GameObject.Find("CanvasCache");
+        Cam = GameObject.Find("Camera");
         D = this.transform.GetChild(0).gameObject;
     }
 
@@ -56,6 +60,9 @@ public class Teleport : MonoBehaviour
 
         float i = 0;
 
+        // ###########################
+        // Assombrit l ecran
+        // ###########################
         do
         {
             C.GetComponent<Image>().color = new Color(0, 0, 0, i);
@@ -63,8 +70,9 @@ public class Teleport : MonoBehaviour
             yield return new WaitForSeconds(1 / 50f);
         } while (i < 1);
 
-
-
+        // ###########################
+        // Teleporte
+        // ###########################
         if (Destination == "")
         {
             P.transform.position = new Vector3(D.transform.position.x, D.transform.position.y +1 , D.transform.position.z);
@@ -79,11 +87,16 @@ public class Teleport : MonoBehaviour
         {
             G.transform.rotation = Quaternion.Euler(G.transform.rotation.x, orientation, G.transform.rotation.z);
         }
+
+        Cam.GetComponent<CameraCC>().changeViewTypeTo(typeView);
         
         yield return new WaitForSeconds(p);
 
         i = 1;
 
+        // ###########################
+        // Eclaircit l ecran
+        // ###########################
         do
         {
             C.GetComponent<Image>().color = new Color(0, 0, 0, i);
@@ -99,4 +112,5 @@ public class Teleport : MonoBehaviour
         P.GetComponent<PlayerCC>().Movable=true;
         G.GetComponent<PlayerOrientation>().SetOrientable(true);
     }
+
 }
