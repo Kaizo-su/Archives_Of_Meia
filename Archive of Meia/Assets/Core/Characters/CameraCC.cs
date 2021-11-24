@@ -38,23 +38,23 @@ public class CameraCC : MonoBehaviour
     void Update()
     {
         //this.GetComponent<Transform>().position = target.position + distance;
-        if (Teleport){
-                Tp();
-        }else {
+        if (!Teleport)
+        {
             Lerp();
         }
 
         //transform.LookAt(target);
-        
     }
 
     public Vector3 GetDistance()
     {
         return distance;
     }
-
-    void Tp(){
-        Teleport=false;
+    
+    public void setTeleport(bool p){
+        Teleport=p;
+        positionCible = target.position + distance;
+        ChangeViewType();
         this.GetComponent<Transform>().position = new Vector3(positionCible.x, 0, positionCible.z);
     }
 
@@ -144,4 +144,26 @@ public class CameraCC : MonoBehaviour
             transform.eulerAngles = new Vector3(30, 0, 0);
         }
     }
+
+    /*public void ResetCamPosition()
+    {
+
+        if (worldMapType)
+        {
+            this.GetComponent<Transform>().position = target.position + WorldMapView;
+            transform.eulerAngles = new Vector3(70, 0, 0);
+
+        }
+        else if (interiorType)
+        {
+            this.GetComponent<Transform>().position = target.position + InteriorView;
+            transform.eulerAngles = new Vector3(55, 0, 0);
+
+        }
+        else if (ExteriorType)
+        {
+            this.GetComponent<Transform>().position = target.position + ExteriorView;
+            transform.eulerAngles = new Vector3(30, 0, 0);
+        }
+    }*/
 }

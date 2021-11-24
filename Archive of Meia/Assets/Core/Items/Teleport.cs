@@ -75,8 +75,9 @@ public class Teleport : MonoBehaviour
         // ###########################
         if (Destination == "")
         {
+            Cam.GetComponent<CameraCC>().setTeleport(true);
             P.transform.position = new Vector3(D.transform.position.x, D.transform.position.y +1 , D.transform.position.z);
-            CameraCC.Teleport= true;
+            Cam.GetComponent<CameraCC>().setTeleport(false);
         }
         else
         {
@@ -89,7 +90,8 @@ public class Teleport : MonoBehaviour
         }
 
         Cam.GetComponent<CameraCC>().changeViewTypeTo(typeView);
-        
+        //Cam.GetComponent<CameraCC>().ResetCamPosition();
+
         yield return new WaitForSeconds(p);
 
         i = 1;
@@ -112,5 +114,4 @@ public class Teleport : MonoBehaviour
         P.GetComponent<PlayerCC>().Movable=true;
         G.GetComponent<PlayerOrientation>().SetOrientable(true);
     }
-
 }
