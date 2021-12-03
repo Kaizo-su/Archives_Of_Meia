@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Teleport : MonoBehaviour
 {
     public string Destination;
-    public float orientation;
+    public float orientation;   // 0 = Nord --- 90 = Est --- 180 = Sud --- 270 = Ouest
     public byte typeView;       // 1 = WorldMap --- 2 = Interior --- 3 = Exterior
 
     private GameObject P;
@@ -22,7 +22,7 @@ public class Teleport : MonoBehaviour
     void Start()
     {
         P = GameObject.Find("Player");
-        G = GameObject.Find("Character");
+        G = GameObject.Find("Perso");
         C = GameObject.Find("CanvasCache");
         Cam = GameObject.Find("Camera");
         D = this.transform.GetChild(0).gameObject;

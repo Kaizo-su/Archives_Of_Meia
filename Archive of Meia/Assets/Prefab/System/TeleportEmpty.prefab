@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destination: 
-  orientation: 0
+  orientation: -1
+  typeView: 0
 --- !u!65 &3887970862896599250
 BoxCollider:
   m_ObjectHideFlags: 0

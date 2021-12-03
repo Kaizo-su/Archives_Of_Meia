@@ -60,7 +60,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destination: 
-  orientation: 0
+  orientation: -1
+  typeView: 0
 --- !u!1 &6807981346171778634
 GameObject:
   m_ObjectHideFlags: 0
