@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.IO;
 
 //[CreateAssetMenu(fileName = "PNJ_Default", menuName = "PNJ settings")]
 public class PNJ : MonoBehaviour
@@ -16,6 +15,7 @@ public class PNJ : MonoBehaviour
     private int[] DialoguesIndex;
 
     private bool onDialogue;
+    private bool onButtonDown;
 
     private GameObject DialogueText;
     private GameObject DialogueName;
@@ -34,6 +34,7 @@ public class PNJ : MonoBehaviour
     void Start()
     {
         onDialogue = false;
+        onButtonDown = false;
 
         DialogueText = GameObject.Find("DialogueText");
         DialogueName = GameObject.Find("DialogueName");
@@ -90,14 +91,14 @@ public class PNJ : MonoBehaviour
     void Update()
 
     {
-        /*if (Input.GetButtonDown("Fire2") && !onDialogue)
+        if (Input.GetButtonDown("Fire2"))
         {
-            onDialogue = true;
-
-            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
-            GameObject.Find("T_Action").GetComponent<Text>().text = "";
-            StartCoroutine(Diallgue());
-        }*/
+            onButtonDown = true;
+        }
+        else if(Input.GetButtonUp("Fire2"))
+        {
+            onButtonDown = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -121,7 +122,7 @@ public class PNJ : MonoBehaviour
     {
         if (other.name == "Player")
         {
-            if (Input.GetButtonDown("Fire2") && !onDialogue)
+            if (onButtonDown && !onDialogue)
             {
                 onDialogue = true;
 

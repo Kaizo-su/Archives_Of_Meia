@@ -114,8 +114,11 @@ public class Teleport : MonoBehaviour
             G.transform.rotation = Quaternion.Euler(G.transform.rotation.x, orientation, G.transform.rotation.z);
         }
 
-        Cam.GetComponent<CameraCC>().changeViewTypeTo(typeView);
-        //Cam.GetComponent<CameraCC>().ResetCamPosition();
+        if(Cam != null)
+        {
+            Cam.GetComponent<CameraCC>().changeViewTypeTo(typeView);
+            //Cam.GetComponent<CameraCC>().ResetCamPosition();
+        }
 
         yield return new WaitForSeconds(p);
 

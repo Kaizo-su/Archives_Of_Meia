@@ -140,7 +140,6 @@ public class PlayerCC : MonoBehaviour {
 
         }
 
-
         if (cooldown > 0)
         {
             cooldown--;
