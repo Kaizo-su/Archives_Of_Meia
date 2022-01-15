@@ -39,16 +39,19 @@ public class LockedDoor : MonoBehaviour
             canOpen = true;
             openable = other.GetComponent<InventoryCC>().Key != 0;
             GameObject.Find(openable ? "I_Action" : "I_NAction").GetComponent<Image>().color = Color.white;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
         }
-        GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
     }
 
     private void OnTriggerExit(Collider other)
     {
-        GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
-        GameObject.Find("I_NAction").GetComponent<Image>().color = Color.clear;
-        GameObject.Find("T_Action").GetComponent<Text>().text = "";
-        canOpen = false; 
+        if (other.name == "Player")
+        {
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("I_NAction").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "";
+        canOpen = false;
+        }
     }
 
 

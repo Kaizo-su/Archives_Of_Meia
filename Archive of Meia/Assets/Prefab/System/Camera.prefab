@@ -96,7 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259b7b54da6f1614bb174177fe21a4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  latence: 20
+  latence: 15
   worldMapType: 0
-  interiorType: 1
+  interiorType: 0
   ExteriorType: 0
+  Teleport: 0

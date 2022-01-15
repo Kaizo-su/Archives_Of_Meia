@@ -15,7 +15,21 @@ public class LockedBossDoor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() { }
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire2") && openable && !opened)
+        {
+            opened = true;
+            GameObject.Find("Player").GetComponent<InventoryCC>().GoldKey = false;
+
+            //GameObject.Find("Character").transform.LookAt(this.transform);
+            this.GetComponent<Collider>().enabled = false;
+
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "";
+            StartCoroutine(Opening());
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -23,31 +37,23 @@ public class LockedBossDoor : MonoBehaviour
         {
             openable = !other.GetComponent<InventoryCC>().GoldKey;
             GameObject.Find(openable?"I_Action":"I_NAction").GetComponent<Image>().color = Color.white;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
         }
-        GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
     }
 
     private void OnTriggerExit(Collider other)
     {
-        GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
-        GameObject.Find("I_NAction").GetComponent<Image>().color = Color.clear;
-        GameObject.Find("T_Action").GetComponent<Text>().text = "";
+        if (other.name == "Player")
+        {
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("I_NAction").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "";
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (Input.GetButtonDown("Fire2") && openable && !opened)
-        {
-            opened = true;
-            GameObject.Find("Player").GetComponent<InventoryCC>().GoldKey=false;
-
-            GameObject.Find("Character").transform.LookAt(this.transform);
-            this.GetComponent<Collider>().enabled = false;
-
-            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
-            GameObject.Find("T_Action").GetComponent<Text>().text = "";
-            StartCoroutine(Opening());
-        }
+        
     }
 
     IEnumerator Opening()

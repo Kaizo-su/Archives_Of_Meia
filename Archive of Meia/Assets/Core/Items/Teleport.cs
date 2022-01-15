@@ -8,11 +8,13 @@ public class Teleport : MonoBehaviour
 {
     public string Destination;
     public float orientation;   // 0 = Nord --- 90 = Est --- 180 = Sud --- 270 = Ouest
-    public byte typeView;       // 1 = WorldMap --- 2 = Interior --- 3 = Exterior
+    public byte typeView;       // 0 = Pas de changement --- 1 = WorldMap --- 2 = Interior --- 3 = Exterior
+    //public byte light;          // 0 = Off --- 1 = On --- Pas de changemant
+    public bool UseButtunToTeleport;
 
     private GameObject P;
     private GameObject G;
-
+    //private GameObject L;
     private GameObject C;
     private GameObject D;
 
@@ -22,8 +24,9 @@ public class Teleport : MonoBehaviour
     void Start()
     {
         P = GameObject.Find("Player");
-        G = GameObject.Find("Perso");
+        G = GameObject.Find("Character");
         C = GameObject.Find("CanvasCache");
+        //L = GameObject.Find("Directional Light");
         Cam = GameObject.Find("Camera");
         D = this.transform.GetChild(0).gameObject;
     }
@@ -31,12 +34,22 @@ public class Teleport : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown("Fire2") && UseButtunToTeleport == true)
+        {
+
+            GameObject.Find("Character").transform.LookAt(this.transform);
+            this.GetComponent<Collider>().enabled = false;
+            this.transform.localEulerAngles = new Vector3(100, 0, 0);
+
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "";
+            StartCoroutine(Teleportation(0.5f));
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.name == P.name)
+        if(other.name == P.name && UseButtunToTeleport == false)
         {
             while (orientation > 360)
             {
@@ -46,6 +59,17 @@ public class Teleport : MonoBehaviour
             StartCoroutine(Teleportation(0.5f));
             
         }
+
+        if(UseButtunToTeleport == true)
+        {
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.white;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "Entrer";
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
+        GameObject.Find("T_Action").GetComponent<Text>().text = "";
     }
 
     IEnumerator Teleportation(float p)
@@ -75,9 +99,10 @@ public class Teleport : MonoBehaviour
         // ###########################
         if (Destination == "")
         {
-            Cam.GetComponent<CameraCC>().setTeleport(true);
+            Cam.GetComponent<CameraCC>().SetTeleport(true);
             P.transform.position = new Vector3(D.transform.position.x, D.transform.position.y +1 , D.transform.position.z);
-            Cam.GetComponent<CameraCC>().setTeleport(false);
+            Cam.GetComponent<CameraCC>().SetTeleport(false);
+            Cam.GetComponent<CameraCC>().ResetCameraPosition();
         }
         else
         {
@@ -97,7 +122,7 @@ public class Teleport : MonoBehaviour
         i = 1;
 
         // ###########################
-        // Eclaircit l ecran
+        // Eclaircit l'ecran
         // ###########################
         do
         {
@@ -114,4 +139,5 @@ public class Teleport : MonoBehaviour
         P.GetComponent<PlayerCC>().Movable=true;
         G.GetComponent<PlayerOrientation>().SetOrientable(true);
     }
+
 }

@@ -12,20 +12,23 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: fdba0bf383dcec3469700748ddbca916
   - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
     path: Assets/Scenes/Ships/Ship01.unity
     guid: f004d44b954c77d49a12052c29b5f7ca
   - enabled: 1
     path: Assets/Scenes/Ships/Cale01.unity
     guid: 8d336e2a402fc5d43868eaf46cb13390
   - enabled: 1
-    path: Assets/Scenes/Map.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenes/Dungeons/DJ1.unity
     guid: 06204247a127c78439c854e2d9be91c0
   - enabled: 1
     path: Assets/Scenes/Dungeons/DJ0.unity
     guid: b5903d9ed7d8bf34a9fba05527b8efbf
+  - enabled: 1
+    path: Assets/Scenes/Town/Town01/NMyrrha.unity
+    guid: 5ffb08bdd07651d4d8bb8734e9188780
   - enabled: 1
     path: Assets/Scenes/Beta.unity
     guid: b8448c3b68586884594b66a46a3d81af

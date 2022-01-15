@@ -16,27 +16,15 @@ public abstract class Chest : MonoBehaviour
             this.GetComponent<Collider>().enabled = false;
             this.transform.localEulerAngles = new Vector3(100, 0, 0);
         }
-        canOpen=false; 
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        GameObject.Find("I_Action").GetComponent<Image>().color = Color.white;
-        GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
-        GameObject.Find("T_Action").GetComponent<Text>().text = "";
         canOpen=false;
     }
 
     protected abstract void loot();
 
-    void Update () {
+    void Update()
+    {
 
-        if (Input.GetButtonDown("Fire2") && canOpen==true && opened==false)
+        if (Input.GetButtonDown("Fire2") && canOpen == true && opened == false)
         {
             opened = true;
 
@@ -51,9 +39,31 @@ public abstract class Chest : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "Player")
+        {
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.white;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.name == "Player")
+        {
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "";
+            canOpen = false;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
-       canOpen=true;  
+        if (other.name == "Player")
+        {
+            canOpen = true;
+        }
     }
 
 

@@ -15,21 +15,24 @@ public class CameraCC : MonoBehaviour
     private Vector3 ExteriorView;
     private Vector3 distance;
     private Vector3 positionCible;
-    public static bool Teleport;
+    public bool teleport;
+    public bool cameraFixe;
 
     // Use this for initialization
     void Start()
     {
 
         WorldMapView = new Vector3(0, 30, -9);
-        InteriorView = new Vector3(0, 11, -6);
-        ExteriorView = new Vector3(0, 6, -10);
+        InteriorView = new Vector3(0, 10, -6);
+        ExteriorView = new Vector3(0, 7, -10);
 
         target = GameObject.Find("Player").GetComponent<Transform>();
         if (latence < 0)
             latence = 0;
-        
-        Teleport=false;
+
+        teleport = false;
+
+        cameraFixe = worldMapType;
 
         ChangeViewType();
     }
@@ -38,12 +41,21 @@ public class CameraCC : MonoBehaviour
     void Update()
     {
         //this.GetComponent<Transform>().position = target.position + distance;
-        if (!Teleport)
+        if (!teleport)
         {
-            Lerp();
+            if (cameraFixe)
+            {
+                this.GetComponent<Transform>().position = target.position + distance;
+            }
+            else
+            {
+                Lerp();
+            }
+            
         }
-
         //transform.LookAt(target);
+
+        //Debug.Log(this.positionCible);
     }
 
     public Vector3 GetDistance()
@@ -51,11 +63,15 @@ public class CameraCC : MonoBehaviour
         return distance;
     }
     
-    public void setTeleport(bool p){
-        Teleport=p;
-        positionCible = target.position + distance;
+    public void SetTeleport(bool p){
+        teleport = p;
+    }
+
+    public void ResetCameraPosition()
+    {
         ChangeViewType();
-        this.GetComponent<Transform>().position = new Vector3(positionCible.x, 0, positionCible.z);
+        positionCible = target.position + distance;
+        this.GetComponent<Transform>().position = positionCible;
     }
 
     void Lerp()

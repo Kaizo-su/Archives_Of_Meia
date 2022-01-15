@@ -65,7 +65,7 @@ public class PlayerCC : MonoBehaviour {
         cooldown = time;
         actionCooldown = 0;
         E = GameObject.Find("epee");
-        C = GameObject.Find("Perso");
+        C = GameObject.Find("Character");
 
     }
 
