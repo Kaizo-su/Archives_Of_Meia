@@ -20,7 +20,6 @@ public class UI_GoldKey : MonoBehaviour
         {
             key = value;
             I_GoldKey.color = key ? Color.white : Color.clear;
-
         }
     }
 }

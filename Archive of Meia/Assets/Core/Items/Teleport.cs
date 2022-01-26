@@ -20,6 +20,8 @@ public class Teleport : MonoBehaviour
 
     private GameObject Cam;
 
+    private bool onButtonDown;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,26 +31,25 @@ public class Teleport : MonoBehaviour
         //L = GameObject.Find("Directional Light");
         Cam = GameObject.Find("Camera");
         D = this.transform.GetChild(0).gameObject;
+        onButtonDown = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire2") && UseButtunToTeleport == true)
+        if (Input.GetButtonDown("Fire2"))
         {
-
-            GameObject.Find("Character").transform.LookAt(this.transform);
-            this.GetComponent<Collider>().enabled = false;
-            this.transform.localEulerAngles = new Vector3(100, 0, 0);
-
-            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
-            GameObject.Find("T_Action").GetComponent<Text>().text = "";
-            StartCoroutine(Teleportation(0.5f));
+            onButtonDown = true;
+        }
+        else if (Input.GetButtonUp("Fire2"))
+        {
+            onButtonDown = false;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //Teleporte au contact
         if(other.name == P.name && UseButtunToTeleport == false)
         {
             while (orientation > 360)
@@ -60,12 +61,30 @@ public class Teleport : MonoBehaviour
             
         }
 
+        //Affiche la commande d'action si la teleportation s'active via un bouton
         if(UseButtunToTeleport == true)
         {
             GameObject.Find("I_Action").GetComponent<Image>().color = Color.white;
             GameObject.Find("T_Action").GetComponent<Text>().text = "Entrer";
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //Teleporte via un bouton
+        if (onButtonDown && UseButtunToTeleport == true)
+        {
+
+            //GameObject.Find("Character").transform.LookAt(this.transform);
+            this.GetComponent<Collider>().enabled = false;
+            //this.transform.localEulerAngles = new Vector3(100, 0, 0);
+
+            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
+            GameObject.Find("T_Action").GetComponent<Text>().text = "";
+            StartCoroutine(Teleportation(0.5f));
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
@@ -141,6 +160,7 @@ public class Teleport : MonoBehaviour
         yield return new WaitForSeconds(p / 3);
         P.GetComponent<PlayerCC>().Movable=true;
         G.GetComponent<PlayerOrientation>().SetOrientable(true);
+        this.GetComponent<Collider>().enabled = true;
     }
 
 }

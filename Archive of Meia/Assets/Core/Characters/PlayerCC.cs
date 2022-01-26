@@ -5,15 +5,14 @@ public class PlayerCC : MonoBehaviour {
 
     private int time;
     private int cooldown;
-    private int actionCooldown;
       
     public float walkSpeed = 10f;
     public float jumpSpeed = 4f;
     public float gravity = 17f;
+    public bool WorldMapCharacter = false;
 
     private bool canGetDammages = true;
     private bool inAir = true;
-    private bool movable = true;
     private bool isPaused = false;
 
     private Vector3 moveDirection = Vector3.zero;
@@ -22,8 +21,9 @@ public class PlayerCC : MonoBehaviour {
     private CharacterController Cc;
     private GameObject PvFill;
     private GameObject PmFill;
-    private GameObject E;
-    private GameObject C;
+    private GameObject E;       //Epee
+    private GameObject C;       //Character
+    private GameObject P;       //Probe
 
     private GameObject InGame;
     private GameObject Pause;
@@ -63,26 +63,22 @@ public class PlayerCC : MonoBehaviour {
 
         time = 15;
         cooldown = time;
-        actionCooldown = 0;
         E = GameObject.Find("epee");
         C = GameObject.Find("Character");
+        P = GameObject.Find("Probe");
+        E.SetActive(false);
+        Movable = true;
 
-    }
-
-    void FixedUpdate()
-    {
-        if (actionCooldown >= 0)
-        { //Cooldown sur l'attaque
-            actionCooldown--;
-        }
     }
 
     // Update is called once per frame
     void Update () {
 
-        //Debug.Log(recovery);
+        if (WorldMapCharacter)
+        {
+            probeBehaviour();
+        }
 
-        
         // ***
         // Déplacements
         // ***
@@ -124,34 +120,35 @@ public class PlayerCC : MonoBehaviour {
 
         moveDirection.y -= gravity * Time.deltaTime;
 
-        if(movable)
+        if(Movable)
             Cc.Move(moveDirection * Time.deltaTime);
 
         // ***
         // Coups d'épée
         // ***
-        if (Input.GetButtonDown("Fire2") && cooldown <= 5 && movable && actionCooldown <=0)
+        if (Input.GetButtonDown("Fire3") && cooldown == time )
         {
-            cooldown = time;
+            cooldown = 0;
             E.SetActive(true);
             C.GetComponent<PlayerOrientation>().SetOrientable(false);
-            Movable=false;
-            actionCooldown = 30;
+            Movable = false;
 
         }
 
-        if (cooldown > 0)
+        if (cooldown == time - 1)
         {
-            cooldown--;
-            if (cooldown == 0)
-            {
-                Movable=true;
-                C.GetComponent<PlayerOrientation>().SetOrientable(true);
-            }
-            else if (cooldown <= 5)
-            {
-                E.SetActive(false);
-            }
+            Movable = true;
+            C.GetComponent<PlayerOrientation>().SetOrientable(true);
+        }
+
+        if (cooldown == (int) time/3)
+        {
+            E.SetActive(false);
+        }
+
+        if (cooldown < time )
+        {
+            cooldown++;
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -159,7 +156,6 @@ public class PlayerCC : MonoBehaviour {
             TogglePauseGame();
             //GameObject.Find("Inventory").GetComponent<UI_Inventory>().DisplayInventory();
         }
-        //Debug.Log(cooldown);
 
         if (Pv > MaxPv){
             Pv=MaxPv;
@@ -180,8 +176,6 @@ public class PlayerCC : MonoBehaviour {
         Pause.SetActive(isPaused);
         Pause.transform.GetChild(2).GetComponent<UI_Stat>().Actualisation();
     }
-
-    public bool Movable { get;set; }
 
     public void SetOrientable(bool p)
     {
@@ -219,39 +213,37 @@ public class PlayerCC : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Input.GetButtonDown("Fire3")
-            && (other.tag == "Ennemi" && cooldown <= 5))
-            {
-                Debug.Log(other);
-                other.GetComponent<FoeBehaviour>().Dammages(1);
-            }
-        
+        if (Input.GetButtonDown("Fire3") && (other.tag == "Ennemi" && cooldown <= 5))
+        {
+            Debug.Log(other);
+            other.GetComponent<FoeBehaviour>().Dammages(1);
+        }
     }
 
+    private void probeBehaviour()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(P.transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(P.transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
+            Debug.Log(hit.transform.name);
+            if(hit.transform.name == "Ocean")
+            {
+                Movable = false;
+            }
+            else
+            {
+                Movable = true;
+            }
+        }
+    }
+
+
+    public bool Movable { get; set; }
     public static int Level { get; set; }
     public static int MaxPv { get; set; }
     public static int Pv { get; set; }
     public static int MaxPm { get; set; }
     public static int Pm { get; set; }
-
-
-
-    /* private void OnTriggerStay(Collider other){
-        if (other.tag = "Chest") {
-            if (Input.GetButtonDown("Fire3")){
-            opened = true;
-            GameObject.Find("Character").transform.LookAt(this.transform);
-            this.GetComponent<Collider>().enabled = false;
-            this.transform.localEulerAngles = new Vector3(100, 0, 0);
-            GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
-            GameObject.Find("T_Action").GetComponent<Text>().text = "";
-            StartCoroutine(Opening());
-            }
-        }
-       
-    }*/
-
-
-
 
 }

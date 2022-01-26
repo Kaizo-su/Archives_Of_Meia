@@ -37,7 +37,7 @@ public class LockedDoor : MonoBehaviour
         if(other.name == "Player")
         {
             canOpen = true;
-            openable = other.GetComponent<InventoryCC>().Key != 0;
+            openable = other.GetComponent<InventoryCC>().GetKeyItems(0).Qt != 0;
             GameObject.Find(openable ? "I_Action" : "I_NAction").GetComponent<Image>().color = Color.white;
             GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
         }

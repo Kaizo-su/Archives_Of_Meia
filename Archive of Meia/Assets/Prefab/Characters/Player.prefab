@@ -36,7 +36,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2763088895514320107}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3193687566652902581}
@@ -366,6 +366,7 @@ MonoBehaviour:
   walkSpeed: 10
   jumpSpeed: 4
   gravity: 17
+  WorldMapCharacter: 0
 --- !u!114 &3193687567489386933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +379,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb5a6da7d5035044af01076150ae2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemsTextFile: {fileID: 4900000, guid: e27a13ffeb6be2c46be692fcc26db44a, type: 3}
+  KeyItemsTextFile: {fileID: 4900000, guid: b8dabb401d13faa48aa6ba3217feaf94, type: 3}
+  WeaAndProTextFile: {fileID: 4900000, guid: f6420c3fb6f355b47b73e4ced352f896, type: 3}
   Sprites:
   - {fileID: 5112461652078545001, guid: 7302be1872b668643aad20a76a962666, type: 3}
   - {fileID: -7366183714388635122, guid: 7302be1872b668643aad20a76a962666, type: 3}

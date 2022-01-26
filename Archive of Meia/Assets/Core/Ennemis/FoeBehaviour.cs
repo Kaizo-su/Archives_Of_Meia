@@ -110,10 +110,6 @@ public class FoeBehaviour : MonoBehaviour
                 timer = 100;
             }
         }
-
-
-
-
     }
     void Update()
     {

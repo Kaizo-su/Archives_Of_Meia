@@ -5853,7 +5853,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 2, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &772921463
 PrefabInstance:
@@ -17006,10 +17006,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3046525496330642756, guid: e413a874557dba348a875abb1be8b2b4,
+        type: 3}
+      propertyPath: ExteriorType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3046525496330642757, guid: e413a874557dba348a875abb1be8b2b4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3046525496330642757, guid: e413a874557dba348a875abb1be8b2b4,
         type: 3}

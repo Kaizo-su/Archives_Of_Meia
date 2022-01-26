@@ -10,15 +10,26 @@ public class TitleScreenCursor : MonoBehaviour
     private int cooldown;
     private int waiting;
 
+    private string[] stringTable;
+    private string[,] TextTable;
+    private string textFile;
+    public TextAsset File;
+
+    private GameObject NewGame;
+    private GameObject Continue;
+    private GameObject Option;
+    private GameObject Quit;
+
     private bool locked;
 
     private Image I;
 
     int menuItemHeight = 80;
+
     private string[][] coroutine = new string[][]
     {
         //                  Action   | Params (optionnels)
-      /*0*/  new string[]{"LoadScene", "DJ0"},
+      /*0*/  new string[]{"LoadScene", "Ship01"},
       /*1*/  new string[]{""},
       /*2*/  new string[]{""},
       /*3*/  new string[]{"Quit"},
@@ -27,14 +38,64 @@ public class TitleScreenCursor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NewGame = GameObject.Find("NewGame");
+        Continue = GameObject.Find("Continue");
+        Option = GameObject.Find("Option");
+        Quit = GameObject.Find("Quit");
+
         I = GameObject.Find("CanvasCache").GetComponent<Image>();
         option = 0;
-        cooldown = 20;
+        cooldown = 45;
         waiting = cooldown;
-    }
-    private void FixedUpdate()
-    {
-        waiting++;
+
+
+        //Recupere le texte du fichier
+        if (File == null)
+        {
+            textFile = "NO FILE";
+        }
+        else
+        {
+            textFile = File.ToString();
+        }
+
+        int x = 0;
+        int y = 0;
+        int l = 0;
+
+        //Repaire toute les entrees du texte
+        stringTable = textFile.Split(';', '\n');
+
+        //Calcule le nombre de colone et de ligne
+        for (int i = 0; i < File.ToString().Length; i++)
+        {
+            if (textFile[i] == '\n')
+            {
+                y++;
+            }
+            if (textFile[i] == ';')
+            {
+                x++;
+            }
+        }
+
+        //Declare un tableau selon les ligne et les colones
+        TextTable = new string[(x / y) + 1, y];
+
+        //Remplis le tableau avec les entrees de textes
+        for (int j = 0; j < y; j++)
+        {
+            for (int k = 0; k < (x / y) + 1; k++)
+            {
+                TextTable[k, j] = stringTable[l];
+                l++;
+            }
+        }
+
+        NewGame.GetComponent<Text>().text = TextTable[TheGameManager.lang, 1];
+        Continue.GetComponent<Text>().text = TextTable[TheGameManager.lang, 2];
+        Option.GetComponent<Text>().text = TextTable[TheGameManager.lang, 3];
+        Quit.GetComponent<Text>().text = TextTable[TheGameManager.lang, 4];
     }
 
     // Update is called once per frame
@@ -42,7 +103,7 @@ public class TitleScreenCursor : MonoBehaviour
     {
         if (!locked)
         {
-            if (Input.GetKeyDown(KeyCode.W) || (Input.GetAxis("Vertical") >= 0.5f && waiting == cooldown))  // Le vertical fait bugger les fleches
+            if (Input.GetKeyDown(KeyCode.W) || (Input.GetAxis("Vertical") >= 0.5f && waiting == cooldown))
             {
                 option--;
                 waiting = 0;
@@ -53,17 +114,21 @@ public class TitleScreenCursor : MonoBehaviour
                 waiting = 0;
             }
 
-
             option += coroutine.Length;
             option %= coroutine.Length;
 
             transform.localPosition = new Vector3(transform.localPosition.x, -menuItemHeight * option, transform.localPosition.z);
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire2"))
             {
                 locked = true;
                 StartCoroutine("RunMenuAction", coroutine[option]);
             }
+        }
+
+        if (waiting < cooldown)
+        {
+            waiting++;
         }
     }
 

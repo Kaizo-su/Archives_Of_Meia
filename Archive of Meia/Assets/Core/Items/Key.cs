@@ -6,7 +6,7 @@ public class Key : MonoBehaviour
     {
         if (other.name == "Player" )
         {
-            GameObject.Find("Player").GetComponent<InventoryCC>().AddKeys(1);
+            GameObject.Find("Player").GetComponent<InventoryCC>().SetKeyItems(0, 1);
             Destroy(this.gameObject);
         }
     }

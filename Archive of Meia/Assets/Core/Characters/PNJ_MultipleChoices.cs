@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //[CreateAssetMenu(fileName = "PNJ_Default", menuName = "PNJ settings")]
-public class PNJ : MonoBehaviour
+public class PNJ_MultipleChoices: MonoBehaviour
 {
-    public Dialogue dialogue;
     public TextAsset File;
 
     [SerializeField]
@@ -60,7 +59,7 @@ public class PNJ : MonoBehaviour
             textFile = File.ToString();
         }
 
-        //Repare toute les entrees du texte
+        //Repaire toute les entrees du texte
         stringTable = textFile.Split(';', '\n');
 
         //Calcule le nombre de colone et de ligne
@@ -164,7 +163,7 @@ public class PNJ : MonoBehaviour
             }
             else if(TextTable.GetLength(1) > DialoguesIndex[index])
             {
-                DialogueText.GetComponent<Text>().text = TextTable[1, DialoguesIndex[index]];
+                DialogueText.GetComponent<Text>().text = TextTable[TheGameManager.lang, DialoguesIndex[index]];
             }
             else
             {

@@ -13,8 +13,6 @@ public class MoneyChest : Chest
 
     protected override void loot()
     {
-        //AddCash(cash);
-        //GameObject.Find("Player").GetComponent<InventoryCC>().Monnaie += cash;
-        GameObject.Find("Player").GetComponent<InventoryCC>().Money+=cash;
+        GameObject.Find("Player").GetComponent<InventoryCC>().SetMoney(cash);
     }
 }

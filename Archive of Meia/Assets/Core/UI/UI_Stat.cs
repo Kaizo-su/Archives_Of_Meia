@@ -38,8 +38,8 @@ public class UI_Stat : MonoBehaviour
         Pv.text = PlayerCC.Pv + "/" + PlayerCC.MaxPv;
         Pm.text = PlayerCC.Pm + "/" + PlayerCC.MaxPm;
 
-        Gk.text = (Icc.GoldKey ? "1" : "0");
+        /*Gk.text = (Icc.GoldKey ? "1" : "0");
         Rk.text = Icc.Key.ToString();
-        Mn.text = Icc.Money.ToString();
+        Mn.text = Icc.Money.ToString();*/
     }
 }

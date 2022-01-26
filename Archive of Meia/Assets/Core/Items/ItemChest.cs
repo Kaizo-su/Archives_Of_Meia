@@ -7,11 +7,11 @@ public class ItemChest : Chest
 {
     static private bool opened;
 
-    public int IndexObjet;
+    public byte IndexObjet;
 
-    private void lootItem(int p)
+    private void lootItem(byte p)
     {
-        GameObject.Find("Player").GetComponent<InventoryCC>().AddObject(p);
+        GameObject.Find("Player").GetComponent<InventoryCC>().SetItems(p, 1);
     }
 
     protected override void loot()

@@ -20,6 +20,8 @@ public class AttackCC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*Debug.Log(cooldown);
+
         if (cooldown <= 5)
         {
             cooldown = time;
@@ -40,6 +42,6 @@ public class AttackCC : MonoBehaviour
             {
                 E.SetActive(false);
             }
-        }
+        }*/
     }
 }

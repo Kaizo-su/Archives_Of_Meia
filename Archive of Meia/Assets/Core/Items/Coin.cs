@@ -10,7 +10,7 @@ public class Coin : MonoBehaviour
     {
         if (other.name == "Player" )
         {
-            GameObject.Find("Player").GetComponent<InventoryCC>().Money=value;
+            GameObject.Find("Player").GetComponent<InventoryCC>().SetMoney(value);
             Destroy(gameObject);
         }
     }

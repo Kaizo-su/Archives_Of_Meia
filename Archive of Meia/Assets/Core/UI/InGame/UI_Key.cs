@@ -6,14 +6,12 @@ using UnityEngine;
 public class UI_Key : MonoBehaviour
 {
     private Image I_Key;
-    private int nbKeys;
-    public int Keys {
-        get => nbKeys;
-        set
+    public void Keys () {
         {
-            nbKeys = value;
-            I_Key.color = nbKeys > 0 ? Color.white : Color.clear;
-            GetComponent<Text>().text = nbKeys > 0 ? nbKeys.ToString() : "";
+            int Qt = GameObject.Find("Player").GetComponent<InventoryCC>().GetKeyItems(0).Qt;
+
+            I_Key.color = Qt > 0 ? Color.white : Color.clear;
+            GetComponent<Text>().text = Qt > 0 ? Qt.ToString() : "";
         }
     }
 

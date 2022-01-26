@@ -10,24 +10,18 @@ public class UI_Inventory : MonoBehaviour
     private int objetMax;
     private int hiddenObject;
 
-    private int posX = -380;
-    private int posY = 150;
+    private float posX;
+    private float posY;
 
     public GameObject UI_Item;
-
-    [SerializeField]
-    
 
     private PlayerCC PCC;
     private Text Description;
     private Transform Cursor;
-    private Image UpArrow;
-    private Image DownArrow;
 
     private List<Item> Objects;
     private List<Item> ObjectsInPossession;
     private int[] IndexObjects;
-    private int[] IndexObjectsSaved;
 
     private GameObject Pause;
    //private MonoBehaviour playerScript;
@@ -42,11 +36,14 @@ public class UI_Inventory : MonoBehaviour
         hiddenObject = 0;
 
 
-        Description = transform.GetChild(2).GetComponent<Text>();
+        Description = transform.GetChild(1).GetComponent<Text>();
         
         Cursor = transform.GetChild(3).transform;
-        UpArrow = transform.GetChild(4).GetComponent<Image>();
-        DownArrow = transform.GetChild(5).GetComponent<Image>();
+        posX = Cursor.localPosition.x;
+        posY = Cursor.localPosition.y;
+
+        //UpArrow = transform.GetChild(4).GetComponent<Image>();
+        //DownArrow = transform.GetChild(5).GetComponent<Image>();
 
         Objects = GameObject.Find("Player").GetComponent<InventoryCC>().GetObjects();
         PCC = GameObject.Find("Player").GetComponent<PlayerCC>();
@@ -57,11 +54,11 @@ public class UI_Inventory : MonoBehaviour
         Pause = GameObject.Find("Pause");
 
         //FOR TESTING , remplie un peu l'inventaire
-        IndexObjects = GameObject.Find("Player").GetComponent<InventoryCC>().GetIndexObjects();
+        /*IndexObjects = GameObject.Find("Player").GetComponent<InventoryCC>().GetIndexObjects();
         IndexObjects[0] = 3;
         IndexObjects[1] = 2;
         IndexObjects[2] = 2;
-        IndexObjectsSaved = IndexObjects;
+        IndexObjectsSaved = IndexObjects;*/
         DisplayInventory();
 
         InventoryCC.sacUnlocked = true;
@@ -71,6 +68,7 @@ public class UI_Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Activer/Desactiver la pause
         if (Input.GetButtonDown("Jump"))
         {
             DestroyInventory();
@@ -85,25 +83,37 @@ public class UI_Inventory : MonoBehaviour
         if (Input.GetButtonDown("Fire2"))
         {
 
-            IndexObjects[option]++;
+            //IndexObjects[option]++;
             DestroyInventory();
             DisplayInventory();
 
         }
 
-        // Monte
-        if (Input.GetKeyDown(KeyCode.W) && UI_Pause.option== 3 || (Input.GetAxis("Vertical") >= 0.5f && waiting == cooldown && UI_Pause.option== 3) )
-            option--;
-        else if (Input.GetKeyDown(KeyCode.S) && UI_Pause.option== 3  || (Input.GetAxis("Vertical") <= -0.5f && waiting == cooldown && UI_Pause.option== 3))
+        // Déplacement du currseur dans l'inventaire des objets consomables
+        if (Input.GetKeyDown(KeyCode.W) && UI_Pause.option== 3 || (Input.GetAxis("Horizontal") >= 0.5f && waiting == cooldown && UI_Pause.option== 3))
+        {
             option++;
-        option += objetMax;
-        option %= objetMax;
+            waiting = 0;
+            option += objetMax;
+            option %= objetMax;
+            DescriptionInventaire(option);
+        }
+        else if (Input.GetKeyDown(KeyCode.S) && UI_Pause.option== 3  || (Input.GetAxis("Horizontal") <= -0.5f && waiting == cooldown && UI_Pause.option== 3))
+        {
+            option--;
+            waiting = 0;
+            option += objetMax;
+            option %= objetMax;
+            DescriptionInventaire(option);
+        }
+
+        
 
         if (waiting < cooldown){
             waiting++;
         }
 
-        Cursor.localPosition = new Vector3(posX + 145, posY - (option * 60f), 0);
+        Cursor.localPosition = new Vector2(posX + (option * 90), posY);
     }
 
     public void DisplayInventory()
@@ -114,44 +124,18 @@ public class UI_Inventory : MonoBehaviour
         GameObject g;
         IndexObjects = GameObject.Find("Player").GetComponent<InventoryCC>().GetIndexObjects();
 
-        //int j = 0;
-
         int nbObjets = (Objects.Count < objetMax ? Objects.Count : objetMax);
-
-        for (int i = 0; i < nbObjets /* j*/ ; i++)
+        
+        for (int i = 0; i < nbObjets; i++)
         {
-            /*if(IndexObjects[i] == 0)
-            {
-                j++;
-                continue;
-            }*/
-            if (IndexObjects[i + hiddenObject]>=0){
                 g = Instantiate(UI_Item, Vector3.zero, new Quaternion());
                 g.transform.SetParent(this.transform);
-                g.transform.localPosition = new Vector3(posX, (posY - ((i /*-j*/) * 60f)), 0);
+                g.transform.localScale = new Vector3(1, 1, 1);
+                g.transform.localPosition = new Vector3(posX + (i * 90f), posY);
                 g.name = "Item" + i + hiddenObject;
-                g.GetComponent<Image>().sprite = Objects[i + hiddenObject].Sprite;
-                g.transform.GetChild(0).GetComponent<Text>().text = Objects[i + hiddenObject].Name;
-                g.transform.GetChild(1).GetComponent<Text>().text = IndexObjects[i + hiddenObject].ToString();
-
-            }
-            
-            if (hiddenObject == 0)
-            {
-                UpArrow.color = Color.clear;
-                DownArrow.color = Color.white;
-            }
-            else if (option + hiddenObject >= Objects.Count - 1)
-            {
-                UpArrow.color = Color.white;
-                DownArrow.color = Color.clear;
-            }
-            
-            else if (hiddenObject > 0)
-            {
-                UpArrow.color = Color.white;
-                DownArrow.color = Color.white;
-            }
+                g.GetComponent<Image>().sprite = Objects[i].Sprite;
+                g.transform.GetChild(0).GetComponent<Text>().text = Objects[i].Name;
+                g.transform.GetChild(1).GetComponent<Text>().text = Objects[i].Qt.ToString();
         }
         
     }
@@ -162,21 +146,23 @@ public class UI_Inventory : MonoBehaviour
             Description.text = "";
         else
             Description.text = Objects[i].GetName() + "\n\n" + Objects[i].GetDescription();*/
-        IndexObjects = GameObject.Find("Player").GetComponent<InventoryCC>().GetIndexObjects();
+        /*
+        if (Objects.Count > i){
 
-        if (IndexObjects.Length > i){
-
-            if (IndexObjects[i]>0){
+            if (Objects[i].Qt>0){
                 Description.text = Objects[i].Name + "\n\n" + Objects[i].Description;
             }else {
                 //Description.text= " ";
-                Description.text = Objects[i].Name + "\n\n" + Objects[i].Description; //JUST POUR DEVELOPPEMENT SO I KNOW WTF
+                //Description.text = Objects[i].Name + "\n\n" + Objects[i].Description; //JUST POUR DEVELOPPEMENT SO I KNOW WTF
             }
 
         }else {
 
             Debug.Log("Dude I don't know");
-        }   
+        }   */
+        Debug.Log(Objects[i].Name);
+
+        Description.text = Objects[i].Name + "\n\n" + Objects[i].Description;
     }
 
     private void DestroyInventory()
@@ -208,12 +194,12 @@ public class UI_Inventory : MonoBehaviour
         GameObject.Find("Player").GetComponent<InventoryCC>().CreateObjects();
         Objects = GameObject.Find("Player").GetComponent<InventoryCC>().GetObjects();
         IndexObjects = GameObject.Find("Player").GetComponent<InventoryCC>().GetIndexObjects();
-
+        /*
         for(int i = 0; i < IndexObjectsSaved.Length; i++){
 
             IndexObjects[i] = IndexObjectsSaved[i];
         }
-
+        
         if (InventoryCC.sacUnlocked){
             for(int i = 0; i < IndexObjects.Length; i++){
                 string Nom = Objects[i].Name;
@@ -222,7 +208,7 @@ public class UI_Inventory : MonoBehaviour
                 }
             }
         }
-        IndexObjectsSaved = IndexObjects; 
+        IndexObjectsSaved = IndexObjects; */
         DestroyInventory();
         DisplayInventory();
 

@@ -19,7 +19,8 @@ public class GoldKeyChest : Chest
 
     private void lootGoldKey()
     {
-        GameObject.Find("Player").GetComponent<InventoryCC>().GoldKey=true;
+        //TO DO
+        //GameObject.Find("Player").GetComponent<InventoryCC>().GoldKey=true;
     }
 
     protected override void loot()
@@ -31,7 +32,8 @@ public class GoldKeyChest : Chest
     {
         if (other.name == "Player")
         {
-            openable = other.GetComponent<InventoryCC>().Key != 0;
+            // TO DO
+            //openable = other.GetComponent<InventoryCC>().Key != 0;
             GameObject.Find(openable ? "I_Action" : "I_NAction").GetComponent<Image>().color = Color.white;
         }
         GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
@@ -56,7 +58,8 @@ public class GoldKeyChest : Chest
 
             GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
             GameObject.Find("T_Action").GetComponent<Text>().text = "";
-            GameObject.Find("Player").GetComponent<InventoryCC>().AddKeys(-1);
+            //GameObject.Find("Player").GetComponent<InventoryCC>().AddKeys(-1);
+            GameObject.Find("Player").GetComponent<InventoryCC>().SetKeyItems(0, -1);
             StartCoroutine(Opening());
         }
     }

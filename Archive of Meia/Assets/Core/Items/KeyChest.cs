@@ -4,13 +4,13 @@ public class KeyChest : Chest
 {
     static private bool opened;
 
-    private void lootKey()
+    private void lootKeyItem()
     {
-        GameObject.Find("Player").GetComponent<InventoryCC>().AddKeys(1);
+        GameObject.Find("Player").GetComponent<InventoryCC>().SetKeyItems(0, 1);
     }
 
     protected override void loot()
     {
-        lootKey();
+        lootKeyItem();
     }
 }

@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Item {
   
     public string Name { get; set; }
     public string Description { get; set; }
-
     public int Price { get; set; }
-
     public Sprite Sprite { get; set; }
-
+    public int Qt { get; set; }
 
     public Item(string name, string description, int price, Sprite sprite)
     {
@@ -18,6 +14,7 @@ public class Item {
         Description = description;
         Price = price;
         Sprite = sprite;
+        Qt = 0;
     }
 
 }

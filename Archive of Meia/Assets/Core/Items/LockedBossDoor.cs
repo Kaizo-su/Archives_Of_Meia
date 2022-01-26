@@ -20,7 +20,7 @@ public class LockedBossDoor : MonoBehaviour
         if (Input.GetButtonDown("Fire2") && openable && !opened)
         {
             opened = true;
-            GameObject.Find("Player").GetComponent<InventoryCC>().GoldKey = false;
+            //GameObject.Find("Player").GetComponent<InventoryCC>().GoldKey = false;
 
             //GameObject.Find("Character").transform.LookAt(this.transform);
             this.GetComponent<Collider>().enabled = false;
@@ -35,7 +35,7 @@ public class LockedBossDoor : MonoBehaviour
     {
         if (other.name == "Player")
         {
-            openable = !other.GetComponent<InventoryCC>().GoldKey;
+            //openable = !other.GetComponent<InventoryCC>().GoldKey;
             GameObject.Find(openable?"I_Action":"I_NAction").GetComponent<Image>().color = Color.white;
             GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
         }
