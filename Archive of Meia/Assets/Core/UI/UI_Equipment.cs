@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Inventory : MonoBehaviour
+public class UI_Equipment: MonoBehaviour
 {
     private int option;
     private int optInv;
@@ -26,8 +26,8 @@ public class UI_Inventory : MonoBehaviour
     private Transform Cursor;
 
     // Liste des objets d'inventaire
-    private List<Item> Items;
-    private List<Item> KeyItems;
+    private List<Weapon> Weapons;
+    private List<Protecter> Protecters;
 
     // Start is called before the first frame update
     void Start()
@@ -44,16 +44,16 @@ public class UI_Inventory : MonoBehaviour
         inerTime = 0;
 
         // Récupere les élément de UI du tableau d'Inventaire
-        ItemImage = transform.GetChild(5).GetComponent<Image>();
-        Description = transform.GetChild(8).GetComponent<Text>();
+        ItemImage = transform.GetChild(8).GetComponent<Image>();
+        Description = transform.GetChild(7).GetComponent<Text>();
         Cursor = transform.GetChild(9).transform;
 
         // Récupere la position du curseur
         posX = Cursor.localPosition.x;
         posY = Cursor.localPosition.y;
 
-        Items = GameObject.Find("Player").GetComponent<InventoryCC>().GetItems();
-        KeyItems = GameObject.Find("Player").GetComponent<InventoryCC>().GetKeyItems();
+        Weapons = GameObject.Find("Player").GetComponent<InventoryCC>().GetWeapons();
+        Protecters = GameObject.Find("Player").GetComponent<InventoryCC>().GetProtecters();
         PCC = GameObject.Find("Player").GetComponent<PlayerCC>();
 
         DisplayInventory();
@@ -70,7 +70,7 @@ public class UI_Inventory : MonoBehaviour
             PCC.TogglePauseGame();
         }
 
-        if (Input.GetButtonDown("Fire1") && UI_Pause.option == 3)
+        if (Input.GetButtonDown("Fire1") && UI_Pause.option == 1)
         {
             //TODO trouver l'objet, agir en fonction du type  
 
@@ -84,19 +84,19 @@ public class UI_Inventory : MonoBehaviour
         }
 
         // Déplacement du curseur dans l'inventaire des objets consomables
-        if (Input.GetKeyDown(KeyCode.D) && UI_Pause.option == 3 || (Input.GetAxis("Horizontal") >= 0.5f && waiting == cooldown && UI_Pause.option == 3))
+        if (Input.GetKeyDown(KeyCode.D) && UI_Pause.option == 3 || (Input.GetAxis("Horizontal") >= 0.5f && waiting == cooldown && UI_Pause.option == 1))
         {
             InventoryManager(1, 0);
         }
-        else if (Input.GetKeyDown(KeyCode.A) && UI_Pause.option == 3 || (Input.GetAxis("Horizontal") <= -0.5f && waiting == cooldown && UI_Pause.option == 3))
+        else if (Input.GetKeyDown(KeyCode.A) && UI_Pause.option == 3 || (Input.GetAxis("Horizontal") <= -0.5f && waiting == cooldown && UI_Pause.option == 1))
         {
             InventoryManager(-1, 0);
         }
-        else if (Input.GetKeyDown(KeyCode.W) && UI_Pause.option == 3 || (Input.GetAxis("Vertical") >= 0.5f && waiting == cooldown && UI_Pause.option == 3))
+        else if (Input.GetKeyDown(KeyCode.W) && UI_Pause.option == 3 || (Input.GetAxis("Vertical") >= 0.5f && waiting == cooldown && UI_Pause.option == 1))
         {
             InventoryManager(0, 1);
         }
-        else if (Input.GetKeyDown(KeyCode.S) && UI_Pause.option == 3 || (Input.GetAxis("Vertical") <= -0.5f && waiting == cooldown && UI_Pause.option == 3))
+        else if (Input.GetKeyDown(KeyCode.S) && UI_Pause.option == 3 || (Input.GetAxis("Vertical") <= -0.5f && waiting == cooldown && UI_Pause.option == 1))
         {
             InventoryManager(0, -1);
         }
@@ -116,7 +116,7 @@ public class UI_Inventory : MonoBehaviour
     {
         GameObject g;
 
-        int nbObjets = (Items.Count < ItemMax ? Items.Count : ItemMax);
+        int nbObjets = (Weapons.Count < ItemMax ? Weapons.Count : ItemMax);
         
         for (int i = 0; i < nbObjets; i++)
         {
@@ -125,8 +125,8 @@ public class UI_Inventory : MonoBehaviour
                 g.transform.localScale = new Vector3(1, 1, 1);
                 g.transform.localPosition = new Vector3(posX + (i * 64), posY);
                 g.name = "Item" + i;
-                g.GetComponent<Image>().sprite = Items[i].Sprite;
-                g.transform.GetChild(0).GetComponent<Text>().text = Items[i].Qt.ToString();
+                g.GetComponent<Image>().sprite = Weapons[i].Sprite;
+                //g.transform.GetChild(0).GetComponent<Text>().text = Items[i].Qt.ToString();
         }
         
     }
@@ -135,7 +135,7 @@ public class UI_Inventory : MonoBehaviour
     {
         GameObject g;
 
-        int nbObjets = (KeyItems.Count < KeyItemMax ? KeyItems.Count : KeyItemMax);
+        int nbObjets = (Protecters.Count < KeyItemMax ? Protecters.Count : KeyItemMax);
 
         for (int i = 0; i < nbObjets; i++)
         {
@@ -144,8 +144,8 @@ public class UI_Inventory : MonoBehaviour
             g.transform.localScale = new Vector3(1, 1, 1);
             g.transform.localPosition = new Vector3(posX + (i * 64), posY - 75);
             g.name = "KeyItem" + i + hiddenObject;
-            g.GetComponent<Image>().sprite = KeyItems[i].Sprite;
-            g.transform.GetChild(0).GetComponent<Text>().text = KeyItems[i].Qt.ToString();
+            g.GetComponent<Image>().sprite = Protecters[i].Sprite;
+            //g.transform.GetChild(0).GetComponent<Text>().text = KeyItems[i].Qt.ToString();
         }
 
     }
@@ -153,15 +153,15 @@ public class UI_Inventory : MonoBehaviour
     private void DescriptionInventory(int i)
     {
 
-        Description.text = Items[i].Name + "\n\n" + Items[i].Description;
-        ItemImage.sprite = Items[i].Sprite;
+        Description.text = Weapons[i].Name + "\n\n" + Weapons[i].Description;
+        ItemImage.sprite = Weapons[i].Sprite;
     }
     
     private void DescriptionKeyInventory(int i)
     {
         
-        Description.text = KeyItems[i].Name + "\n\n" + KeyItems[i].Description;
-        ItemImage.sprite = KeyItems[i].Sprite;
+        Description.text = Protecters[i].Name + "\n\n" + Protecters[i].Description;
+        ItemImage.sprite = Protecters[i].Sprite;
     }
 
     private void DestroyInventory()
@@ -209,6 +209,6 @@ public class UI_Inventory : MonoBehaviour
         }
 
         //Positionne le curseur sur un objet selon les variables d'option
-        Cursor.localPosition = new Vector2(posX + (option * 64), posY - (optInv == 0 ? 0 : 75));
+        Cursor.localPosition = new Vector2(posX + (option * 64), posY - (optInv == 0 ? 0 : 64));
     }
 }

@@ -21,7 +21,7 @@ public class LockedDoor : MonoBehaviour
         if (Input.GetButtonDown("Fire2") && openable && !opened && canOpen)
         {
             opened = true;
-            GameObject.Find("Player").GetComponent<InventoryCC>().AddKeys(-1);
+            GameObject.Find("Player").GetComponent<InventoryCC>().SetKeyItems(0, -1);
 
             GameObject.Find("Character").transform.LookAt(transform);
             GetComponent<Collider>().enabled = false;
@@ -37,7 +37,7 @@ public class LockedDoor : MonoBehaviour
         if(other.name == "Player")
         {
             canOpen = true;
-            openable = other.GetComponent<InventoryCC>().GetKeyItems(0).Qt != 0;
+            openable = other.GetComponent<InventoryCC>().GetKeyItem(0).Qt != 0;
             GameObject.Find(openable ? "I_Action" : "I_NAction").GetComponent<Image>().color = Color.white;
             GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
         }

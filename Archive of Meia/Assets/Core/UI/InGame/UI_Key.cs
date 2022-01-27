@@ -8,7 +8,7 @@ public class UI_Key : MonoBehaviour
     private Image I_Key;
     public void Keys () {
         {
-            int Qt = GameObject.Find("Player").GetComponent<InventoryCC>().GetKeyItems(0).Qt;
+            int Qt = GameObject.Find("Player").GetComponent<InventoryCC>().GetKeyItem(0).Qt;
 
             I_Key.color = Qt > 0 ? Color.white : Color.clear;
             GetComponent<Text>().text = Qt > 0 ? Qt.ToString() : "";
