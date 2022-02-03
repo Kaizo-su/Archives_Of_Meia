@@ -3,12 +3,24 @@ using UnityEngine;
 
 public class PlayerCC : MonoBehaviour {
 
+    // Statistiques du personnage
+    private static int Level;
+    private static int MaxPv;
+    private static int Pv;
+    private static int MaxPm;
+    private static int Pm;
+
+    private int Atk;
+
+    // Gestion du temps
     private int time;
     private int cooldown;
       
+    // Gestion des parametres physiques
     public float walkSpeed = 10f;
     public float jumpSpeed = 4f;
     public float gravity = 17f;
+
     public bool WorldMapCharacter = false;
 
     private bool canGetDammages = true;
@@ -27,13 +39,16 @@ public class PlayerCC : MonoBehaviour {
 
     private GameObject InGame;
     private GameObject Pause;
+    
+    // Variable d'équipement du personnage
+    private static Weapon Sword;
+    private static Protecter Armor;
+    private static Protecter Necklace;
 
     private void Awake()
     {
         InGame = GameObject.Find("InGame");
         Pause = GameObject.Find("Pause");
-
-        Pause.SetActive(false);
     }
 
     // Use this for initialization
@@ -46,6 +61,10 @@ public class PlayerCC : MonoBehaviour {
 
         Pv = MaxPv;
         Pm = MaxPm;
+
+        Atk = 0 + (Sword == null ? 0 : Sword.Atk);
+
+        Pause.SetActive(false);
 
         //An = GetComponent<Animator>();
         Cc = GetComponent<CharacterController>();
@@ -154,7 +173,6 @@ public class PlayerCC : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
             TogglePauseGame();
-            //GameObject.Find("Inventory").GetComponent<UI_Inventory>().DisplayInventory();
         }
 
         if (Pv > MaxPv){
@@ -175,6 +193,7 @@ public class PlayerCC : MonoBehaviour {
         SetOrientable(!isPaused);
         Pause.SetActive(isPaused);
         Pause.transform.GetChild(2).GetComponent<UI_Stat>().Actualisation();
+        Pause.GetComponent<UI_Pause>().ActualisationInventaires();
     }
 
     public void SetOrientable(bool p)
@@ -238,12 +257,67 @@ public class PlayerCC : MonoBehaviour {
         }
     }
 
+    // Getter-Setter
+    public static int GetLevel()
+    {
+        return Level;
+    }
+
+    public static int GetMaxPv()
+    {
+        return MaxPv;
+    }
+    
+    public static int GetPv()
+    {
+        return Pv;
+    }
+    
+    public static int GetMaxPm()
+    {
+        return MaxPm;
+    }
+
+    public static int GetPm()
+    {
+        return Pm;
+    }
+
+    public int GetAtk()
+    {
+        return Atk;
+    }
+
+    // Set/Get l'arme
+    public void SetWeapon(Weapon W)
+    {
+        Sword = W;
+    }
+    public Weapon GetWeapon()
+    {
+        return Sword;
+    }
+
+    // Set/Get l'armure
+    public void SetArmor(Protecter P)
+    {
+        Armor = P;
+    }
+    public Protecter GetArmor()
+    {
+        return Armor;
+    }
+
+    // Set/Get le collier
+    public void SetNecklace(Protecter N)
+    {
+        Necklace = N;
+    }
+    public Protecter GetNecklace()
+    {
+        return Necklace;
+    }
 
     public bool Movable { get; set; }
-    public static int Level { get; set; }
-    public static int MaxPv { get; set; }
-    public static int Pv { get; set; }
-    public static int MaxPm { get; set; }
-    public static int Pm { get; set; }
 
 }

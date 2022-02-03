@@ -15,6 +15,7 @@ public class UI_Pause : MonoBehaviour
         Panels = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
             Panels[i] = transform.GetChild(i).transform;
+        ActualisationInventaires();
     }
 
     // Update is called once per frame
@@ -33,5 +34,21 @@ public class UI_Pause : MonoBehaviour
 
         for(int i = Panels.Length - 1; i >= 0; i--)
             Panels[i].localPosition = new Vector2((i - option) * 1000 ,Panels[i].localPosition.y);
+    }
+
+    // Fonction qui met à jour tout les menus de l'interface de pause
+    public void ActualisationInventaires()
+    {
+        if (Panels == null)
+            return;
+
+        //TO DO Afficher description d'items
+
+        /*
+        Panels[3].GetComponent<UI_Inventory>().DestroyInventory();
+        Panels[3].GetComponent<UI_Inventory>().DisplayInventory();
+
+        Panels[1].GetComponent<UI_Equipment>().DestroyInventory();
+        Panels[1].GetComponent<UI_Equipment>().DisplayWeapons();*/
     }
 }

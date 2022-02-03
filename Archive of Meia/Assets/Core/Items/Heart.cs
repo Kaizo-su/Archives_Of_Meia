@@ -12,8 +12,8 @@ public class Heart : MonoBehaviour
     {
     	/*pcPV = GameObject.Find("Player").GetComponent<PlayerCC>().PV;
     	pcMaxPV = GameObject.Find("Player").GetComponent<PlayerCC>().MaxPV;*/
-    	pcPV = PlayerCC.Pv;
-    	pcMaxPV = PlayerCC.MaxPv;
+    	pcPV = PlayerCC.GetPv();
+    	pcMaxPV = PlayerCC.GetMaxPv();
     }
 
     private void OnTriggerStay(Collider other)
@@ -21,8 +21,8 @@ public class Heart : MonoBehaviour
 
         if (other.name == "Player")
         {
-        	pcPV = PlayerCC.Pv;
-    		pcMaxPV = PlayerCC.MaxPv;
+        	pcPV = PlayerCC.GetPv();
+    		pcMaxPV = PlayerCC.GetMaxPv();
     		if (pcPV < pcMaxPV){
     			GameObject.Find("Player").GetComponent<PlayerCC>().Heal(recover);
             	Destroy(this.gameObject);

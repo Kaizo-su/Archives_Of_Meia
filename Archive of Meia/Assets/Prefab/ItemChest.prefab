@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 9158962027635979961}
   - component: {fileID: 9158962027635979960}
   - component: {fileID: 9158962027635979963}
+  - component: {fileID: 2739071998519686373}
+  - component: {fileID: 664141237363404664}
   m_Layer: 0
   m_Name: ItemChest
   m_TagString: Chest
@@ -94,8 +96,34 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.5, z: 1}
-  m_Center: {x: 0, y: 0.03, z: 0.5}
+  m_Size: {x: 2, y: 1.5, z: 1.2}
+  m_Center: {x: 0, y: 0.03, z: 0.6}
+--- !u!65 &2739071998519686373
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158962027635979962}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1.5, z: 0.5}
+  m_Center: {x: 0, y: 0.75, z: 0.5}
+--- !u!114 &664141237363404664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158962027635979962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f1b5ff6f6938d40a260f6b1cd33896, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IndexObjet: 0
 --- !u!1 &9158962027725944604
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,8 +135,6 @@ GameObject:
   - component: {fileID: 9158962027725944605}
   - component: {fileID: 9158962027725944601}
   - component: {fileID: 9158962027725944600}
-  - component: {fileID: 9158962027725944603}
-  - component: {fileID: 9158962027725944602}
   m_Layer: 0
   m_Name: Couvercle
   m_TagString: Untagged
@@ -179,29 +205,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &9158962027725944603
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9158962027725944604}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 1.5, z: 0.5}
-  m_Center: {x: 0, y: 1.25, z: 0}
---- !u!114 &9158962027725944602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9158962027725944604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f1b5ff6f6938d40a260f6b1cd33896, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IndexObjet: 0

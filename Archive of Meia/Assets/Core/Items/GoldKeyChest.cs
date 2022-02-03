@@ -7,20 +7,9 @@ public class GoldKeyChest : Chest
 
     static private bool openable;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (opened)
-        {
-            GetComponent<Collider>().enabled = false;
-            transform.localEulerAngles = new Vector3(100, 0, 0);
-        }
-    }
-
     private void lootGoldKey()
     {
-        //TO DO
-        //GameObject.Find("Player").GetComponent<InventoryCC>().GoldKey=true;
+        GameObject.Find("Player").GetComponent<InventoryCC>().SetKeyItems(1, 1);
     }
 
     protected override void loot()
@@ -32,8 +21,7 @@ public class GoldKeyChest : Chest
     {
         if (other.name == "Player")
         {
-            // TO DO
-            //openable = other.GetComponent<InventoryCC>().Key != 0;
+            openable = other.GetComponent<InventoryCC>().GetKeyItem(0).Qt != 0;
             GameObject.Find(openable ? "I_Action" : "I_NAction").GetComponent<Image>().color = Color.white;
         }
         GameObject.Find("T_Action").GetComponent<Text>().text = "Ouvrir";
@@ -52,13 +40,12 @@ public class GoldKeyChest : Chest
         {
             opened = true;
 
-            GameObject.Find("Character").transform.LookAt(transform);
+            //GameObject.Find("Character").transform.LookAt(transform);
             GetComponent<Collider>().enabled = false;
-            transform.localEulerAngles = new Vector3(100, 0, 0);
+            //transform.localEulerAngles = new Vector3(100, 0, 0);
 
             GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
             GameObject.Find("T_Action").GetComponent<Text>().text = "";
-            //GameObject.Find("Player").GetComponent<InventoryCC>().AddKeys(-1);
             GameObject.Find("Player").GetComponent<InventoryCC>().SetKeyItems(0, -1);
             StartCoroutine(Opening());
         }

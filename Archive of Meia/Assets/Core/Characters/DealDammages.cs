@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class DealDammages : MonoBehaviour
 {
+    private PlayerCC PCC;
+
+    private void Start()
+    {
+        PCC = GetComponentInParent<PlayerCC>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "EnnemiHit")

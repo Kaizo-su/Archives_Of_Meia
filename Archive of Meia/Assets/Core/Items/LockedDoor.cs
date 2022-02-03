@@ -23,7 +23,7 @@ public class LockedDoor : MonoBehaviour
             opened = true;
             GameObject.Find("Player").GetComponent<InventoryCC>().SetKeyItems(0, -1);
 
-            GameObject.Find("Character").transform.LookAt(transform);
+            //GameObject.Find("Character").transform.LookAt(transform);
             GetComponent<Collider>().enabled = false;
 
             GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;

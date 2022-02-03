@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -7,10 +6,14 @@ public abstract class Chest : MonoBehaviour
 {
     private bool opened;
     private bool canOpen;
+
+    private Transform couvercle;
     
     // Start is called before the first frame update
     void Start()
     {
+        couvercle = this.transform.GetChild(0);
+
         if (opened)
         {
             this.GetComponent<Collider>().enabled = false;
@@ -28,9 +31,9 @@ public abstract class Chest : MonoBehaviour
         {
             opened = true;
 
-            GameObject.Find("Character").transform.LookAt(this.transform);
-            this.GetComponent<Collider>().enabled = false;
-            this.transform.localEulerAngles = new Vector3(100, 0, 0);
+            //GameObject.Find("Character").transform.LookAt(this.transform);
+            //this.transform.GetChild(0).GetComponent<Collider>().enabled = false;
+            couvercle.transform.localEulerAngles = new Vector3(100, 0, 0);
 
             GameObject.Find("I_Action").GetComponent<Image>().color = Color.clear;
             GameObject.Find("T_Action").GetComponent<Text>().text = "";
@@ -76,11 +79,11 @@ public abstract class Chest : MonoBehaviour
 
         do
         {
-            this.transform.localEulerAngles = new Vector3(i, 0, 0);
+            couvercle.localEulerAngles = new Vector3(i, 0, 0);
             i += 2f;
             yield return new WaitForEndOfFrame();
 
-        } while (this.transform.localEulerAngles.x <= 80);
+        } while (couvercle.localEulerAngles.x <= 80);
 
         loot();
 

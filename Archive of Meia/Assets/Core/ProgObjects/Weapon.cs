@@ -7,6 +7,7 @@ public class Weapon
     public int Atk { get; set; }
     public Sprite Sprite { get; set; }
     public int Qt { get; set; }
+    public int Id { get; set; }
 
     public Weapon(string name, string description, int atk, int price, Sprite sprite)
     {
@@ -16,6 +17,7 @@ public class Weapon
         Atk = atk;
         Sprite = sprite;
         Qt = 0;
+        Id = Id++;
     }
 
 }
