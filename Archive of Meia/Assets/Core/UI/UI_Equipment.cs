@@ -17,19 +17,29 @@ public class UI_Equipment: MonoBehaviour
     private float posX;
     private float posY;
 
+    private int equipID;
+
     private Sprite NoImage;
 
     public GameObject UI_Item;
+    public GameObject UI_Equiped;
 
     // Gestion du personnage
     private PlayerCC PCC;
-    private Weapon W;
+    private Weapon Sword;
+    private Protecter Armor;
+    private Protecter Necklace;
+    private Accessory Accessory;
 
     // Variables des éléments de UI du tableau d'Inventaire
     private Image ItemImage;
     private Text Description;
-    private Text Stats;
+    private Text Stats01;
+    private Text Stats02;
     private Transform Cursor;
+    private Color32 BaseColor;
+    private Color32 RedColor;
+    private Color32 BlueColor;
 
     // Liste des objets d'inventaire
     private List<Weapon> Weapons;
@@ -52,12 +62,18 @@ public class UI_Equipment: MonoBehaviour
         // Récupere les élément de UI du tableau d'Inventaire
         ItemImage = transform.GetChild(9).GetComponent<Image>();
         Description = transform.GetChild(8).GetComponent<Text>();
-        Stats = transform.GetChild(10).GetComponent<Text>();
-        Cursor = transform.GetChild(11).transform;
+        Stats01 = transform.GetChild(10).GetComponent<Text>();
+        Stats02 = transform.GetChild(11).GetComponent<Text>();
+        Cursor = transform.GetChild(12).transform;
 
         NoImage = ItemImage.GetComponent<Image>().sprite;
         Description.GetComponent<Text>().text = "";
-        Stats.GetComponent<Text>().text = "";
+        Stats01.GetComponent<Text>().text = "";
+        Stats02.GetComponent<Text>().text = "";
+
+        BaseColor = Stats01.color;
+        RedColor = new Color32(190, 80, 45, 255);
+        BlueColor = new Color32(40, 180, 200, 255);
 
         // Récupere la position du curseur
         posX = Cursor.localPosition.x;
@@ -71,42 +87,45 @@ public class UI_Equipment: MonoBehaviour
         PCC = GameObject.Find("Player").GetComponent<PlayerCC>();
 
         // Récupere l'équipement du personnage
-        W = PCC.GetWeapon();
-
+        Sword = PCC.GetWeapon();
+        Armor = PCC.GetArmor();
+        Necklace = PCC.GetNecklace();
 
         for (int i = 0; i < Weapons.Count; i++)
         {
-            //MyWeapons.Add(Weapons[i]);
-            //MyWeapons[i].Qt = 1;
             Weapons[i].Qt = 1;
         }
-
-        Weapons[1].Qt = 0;
+        //Weapons[4].Qt = 0;
+        //Weapons[3].Qt = 0;
+        //Weapons[2].Qt = 0;
 
         for (int i = 0; i < Protecters.Count; i++)
         {
-            //MyProtecters.Add(Protecters[i]);
-            //MyProtecters[i].Qt = 1;
-            Protecters[i].Qt = i%2;
+            Protecters[i].Qt = 1;
         }
-        for(int i = 0; i < Accessories.Count; i++)
+        //Protecters[4].Qt = 0;
+        //Protecters[3].Qt = 0;
+
+        for (int i = 0; i < Accessories.Count; i++)
         {
-            //MyAccessories.Add(Accessories[i]);
             Accessories[i].Qt = 1;
         }
 
-        Weapons[3].Qt = 0;
+        //Weapons[3].Qt = 0;
 
         for (int i = 0; i < Necklaces.Count; i++)
         {
-            //MyNecklaces.Add(Necklaces[i]);
-            Necklaces[i].Qt = i%2;
+            Necklaces[i].Qt = 1;
         }
+
+        //Necklaces[14].Qt = 0;
 
         DisplayWeapons();
         DisplayProtecters();
         DisplayNecklaces();
         DisplayAccessories();
+
+        Debug.Log("Equipé avec: " + (PCC.GetWeapon() != null ? PCC.GetWeapon().Name : "RIEN") + " + " + (PCC.GetArmor() != null ? PCC.GetArmor().Name : "RIEN"));
     }
 
     // Update is called once per frame
@@ -126,6 +145,7 @@ public class UI_Equipment: MonoBehaviour
         if (Input.GetButtonDown("Fire2") && UI_Pause.option == 1)
         {
             Equip();
+            
         }
 
         // Déplacement du curseur dans l'inventaire des objets consomables
@@ -165,10 +185,10 @@ public class UI_Equipment: MonoBehaviour
 
         GameObject g;
 
-        int nbObjets = 3; // Nombre maximal d'armes affichables. Les 2 dernières sont des améliorations de la 3e.
+        int nbObjets = 2; // Nombre maximal d'armes affichables. Les 2 dernières sont des améliorations de la 3e.
 
         // Affiche les 2 premières armes
-        for (int i = 0; i < nbObjets - 1; i++)
+        for (int i = 0; i < nbObjets; i++)
         {
             if (Weapons[i].Qt == 0)
                 continue;
@@ -179,31 +199,40 @@ public class UI_Equipment: MonoBehaviour
             g.transform.localPosition = new Vector3(posX + (i * 64), posY);
             g.name = "Weap" + i;
             g.GetComponent<Image>().sprite = Weapons[i].Sprite;
+            g.transform.GetChild(0).GetComponent<Text>().text = "";
         }
 
         //Affiche la dernière selon certaines conditions.
-        g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
-        g.transform.SetParent(this.transform);
-        g.transform.localScale = new Vector3(1, 1, 1);
-        g.transform.localPosition = new Vector3(posX + (2 * 64), posY);
-        g.name = "Weap" + 3;
+        if (Weapons[2].Qt == 1 || Weapons[3].Qt == 1 || Weapons[4].Qt == 1)
+        {
+            g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
+            g.transform.SetParent(this.transform);
+            g.transform.localScale = new Vector3(1, 1, 1);
+            g.transform.localPosition = new Vector3(posX + (2 * 64), posY);
+            g.name = "Weap" + 3;
+            g.transform.GetChild(0).GetComponent<Text>().text = "";
 
-        if (Weapons[4].Qt == 1)
-            g.GetComponent<Image>().sprite = Weapons[4].Sprite;
-        else if (Weapons[3].Qt == 1)
-            g.GetComponent<Image>().sprite = Weapons[3].Sprite;
-        else if (Weapons[2].Qt == 1)
-            g.GetComponent<Image>().sprite = Weapons[2].Sprite;
-
+            if (Weapons[4].Qt == 1)
+                g.GetComponent<Image>().sprite = Weapons[4].Sprite;
+            else if (Weapons[3].Qt == 1)
+                g.GetComponent<Image>().sprite = Weapons[3].Sprite;
+            else if (Weapons[2].Qt == 1)
+                g.GetComponent<Image>().sprite = Weapons[2].Sprite;
+        }
+        
     }
 
     // Affiche les armures dans la fenêtre d'équipement
     public void DisplayProtecters()
     {
+        if (Protecters == null)
+            return;
+
+        int indexID = 0;
         GameObject g;
 
-        int nbObjets = Protecters.Count;
-
+        // Affiche toutes les armures sauf la dernière.
+        int nbObjets = Protecters.Count - 2;
         for (int i = 0; i < nbObjets; i++)
         {
             if (Protecters[i].Qt == 0)
@@ -215,6 +244,21 @@ public class UI_Equipment: MonoBehaviour
             g.transform.localPosition = new Vector3(posX + (i * 64), posY - 80);
             g.name = "Protect" + i;
             g.GetComponent<Image>().sprite = Protecters[i].Sprite;
+            g.transform.GetChild(0).GetComponent<Text>().text = Protecters[i].Qt.ToString();
+        }
+        
+        //Affiche la dernière selon certaines conditions.
+        if (Protecters[3].Qt == 1 || Protecters[4].Qt == 1)
+        {
+            indexID = (Protecters[4].Qt == 1 ? 4 : 3);
+
+            g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
+            g.transform.SetParent(this.transform);
+            g.transform.localScale = new Vector3(1, 1, 1);
+            g.transform.localPosition = new Vector3(posX + (3 * 64), posY - 80);
+            g.name = "Protect" + indexID;
+            g.GetComponent<Image>().sprite = Protecters[indexID].Sprite;
+            g.transform.GetChild(0).GetComponent<Text>().text = "";
         }
     }
 
@@ -223,9 +267,11 @@ public class UI_Equipment: MonoBehaviour
     {
         GameObject g;
 
-        int nbObjets = Necklaces.Count;
+        int nbObjets = Necklaces.Count - 2;
         int k = 0;
+        int indexID = 0;
 
+        // Affiche touts les colliers sauf le dernier.
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < itCol; j++)
@@ -242,8 +288,23 @@ public class UI_Equipment: MonoBehaviour
                 g.transform.localPosition = new Vector3(posX + (j * 64), posY - 160 - (i * 64));
                 g.name = "Acc" + i;
                 g.GetComponent<Image>().sprite = Necklaces[j + (5 * i)].Sprite;
+                g.transform.GetChild(0).GetComponent<Text>().text = Necklaces[j + (5 * i)].Qt.ToString();
                 k++;
             }
+        }
+
+        //Affiche la dernière selon certaines conditions.
+        if (Necklaces[13].Qt == 1 || Necklaces[14].Qt == 1)
+        {
+            indexID = (Necklaces[14].Qt == 1 ? 14 : 13);
+
+            g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
+            g.transform.SetParent(this.transform);
+            g.transform.localScale = new Vector3(1, 1, 1);
+            g.transform.localPosition = new Vector3(posX + (3 * 64), posY - 160 - (2 * 64));
+            g.name = "Protect" + indexID;
+            g.GetComponent<Image>().sprite = Necklaces[indexID].Sprite;
+            g.transform.GetChild(0).GetComponent<Text>().text = "";
         }
     }
 
@@ -265,45 +326,54 @@ public class UI_Equipment: MonoBehaviour
             g.transform.localPosition = new Vector3(posX + (i * 64), posY - 368);
             g.name = "Acc" + i;
             g.GetComponent<Image>().sprite = Accessories[i].Sprite;
+            g.transform.GetChild(0).GetComponent<Text>().text = "";
         }
     }
 
     //Description des armes
     private void DescriptionWeapon(int i)
     {
-
         if (Weapons[i].Qt == 0 || i == -1 || Weapons == null || Weapons.Count == 0 || Weapons.Count <= i)
         {
             Description.text = "";
             ItemImage.sprite = NoImage;
-            Stats.text = "";
+            Stats01.text = PCC.GetAtk().ToString();
+            Stats02.text = "";
+            Stats01.color = BaseColor;
             return;
         }
 
-        if(i == 2)
+        // Si le dernier équipement est dans l'inventaire il doit remplacer l'avant dernier.
+        if (i == 2)
         {
             if (Weapons[4].Qt == 1)
             {
-                Description.text = Weapons[4].Name + "\n\n" + Weapons[4].Description;
-                ItemImage.sprite = Weapons[4].Sprite;
+                equipID = 4;
             }
             else if (Weapons[3].Qt == 1)
             {
-                Description.text = Weapons[3].Name + "\n\n" + Weapons[3].Description;
-                ItemImage.sprite = Weapons[3].Sprite;
+                equipID = 3;
             }
             else if (Weapons[2].Qt == 1)
             {
-                Description.text = Weapons[2].Name + "\n\n" + Weapons[2].Description;
-                ItemImage.sprite = Weapons[2].Sprite;
+                equipID = i;
             }
         }
         else
         {
-            Description.text = Weapons[i].Name + "\n\n" + Weapons[i].Description;
-            ItemImage.sprite = Weapons[i].Sprite;
+            equipID = i;
         }
-        Stats.text = PCC.GetAtk() + (PCC.GetWeapon() == null ? 0 : PCC.GetWeapon().Atk) + " -> " + (PCC.GetAtk() + Weapons[i].Atk);
+
+        Description.text = Weapons[equipID].Name + "\n\n" + Weapons[equipID].Description;
+        ItemImage.sprite = Weapons[equipID].Sprite;
+
+        Stats01.text = PCC.GetAtk() + " - " + (Weapons[equipID].Atk);
+        Stats02.text = "";
+
+        if (Weapons[equipID].Atk > PCC.GetAtk())
+            Stats01.color = BlueColor;
+        else
+            Stats01.color = (Weapons[equipID].Atk == PCC.GetAtk() ? BaseColor : RedColor);
     }
 
     //Description des armures
@@ -313,14 +383,48 @@ public class UI_Equipment: MonoBehaviour
         {
             Description.text = "";
             ItemImage.sprite = NoImage;
-            Stats.text = "";
+            Stats01.text = PlayerCC.GetMaxPv().ToString();
+            Stats02.text = PlayerCC.GetMaxPm().ToString();
+            Stats01.color = BaseColor;
+            Stats02.color = BaseColor;
             return;
         }
 
-        Description.text = Protecters[i].Name + "\n\n" + Protecters[i].Description;
-        ItemImage.sprite = Protecters[i].Sprite;
-        Stats.text = PlayerCC.GetMaxPv() + (PCC.GetArmor() == null ? 0 : PCC.GetArmor().PV) + " -> " + (PlayerCC.GetMaxPv() + Protecters[i].PV + "\n");
-        Stats.text += PlayerCC.GetMaxPm() + (PCC.GetArmor() == null ? 0 : PCC.GetArmor().PM) + " -> " + (PlayerCC.GetMaxPm() + Protecters[i].PM);
+        // Si le dernier équipement est dans l'inventaire il doit remplacer l'avant dernier.
+        if (i == 3)
+        {
+            if (Protecters[4].Qt >= 1)
+            {
+                equipID = 4;
+            }
+            else if(Protecters[3].Qt >= 1)
+            {
+                equipID = i;
+            }
+        }
+        else
+        {
+            equipID = i;
+        }
+
+        int pv = PlayerCC.GetMaxPv() + Protecters[equipID].PV - (Armor == null ? 0 : Armor.PV);
+        int pm = PlayerCC.GetMaxPm() + Protecters[equipID].PM - (Armor == null ? 0 : Armor.PM);
+
+        Description.text = Protecters[equipID].Name + "\n\n" + Protecters[equipID].Description;
+        ItemImage.sprite = Protecters[equipID].Sprite;
+
+        Stats01.text = PlayerCC.GetMaxPv() + " - " + pv + " (" + Protecters[equipID].PV + ")";
+        Stats02.text = PlayerCC.GetMaxPm() + " - " + pm + " (" + Protecters[equipID].PM + ")";
+        
+        if (pv > PlayerCC.GetMaxPv())
+            Stats01.color = BlueColor;
+        else
+            Stats01.color = (pv == PlayerCC.GetMaxPv() ? BaseColor : RedColor);
+
+        if (pm > PlayerCC.GetMaxPm())
+            Stats02.color = BlueColor;
+        else
+            Stats02.color = (pm == PlayerCC.GetMaxPm() ? BaseColor : RedColor);
     }
 
     //Description des colliers
@@ -329,18 +433,54 @@ public class UI_Equipment: MonoBehaviour
 
         j -= 2;
 
-        if (Necklaces[i + (5 * j)].Qt == 0 || i == -1 || j == -1 || Necklaces == null || Necklaces.Count == 0 || Necklaces.Count <= i)
+        int k = i + (5 * j);
+
+        if (Necklaces[k].Qt == 0 || i == -1 || j == -1 || Necklaces == null || Necklaces.Count == 0 || Necklaces.Count <= i)
         {
             Description.text = "";
             ItemImage.sprite = NoImage;
-            Stats.text = "";
+            Stats01.text = PlayerCC.GetMaxPv().ToString();
+            Stats02.text = PlayerCC.GetMaxPm().ToString();
+            Stats01.color = BaseColor;
+            Stats02.color = BaseColor;
             return;
         }
 
-        Description.text = Necklaces[i + (5 * j)].Name + "\n\n" + Necklaces[i + (5 * j)].Description;
-        ItemImage.sprite = Necklaces[i + (5 * j)].Sprite;
-        Stats.text = PlayerCC.GetMaxPv() + (PCC.GetNecklace() == null ? 0 : PCC.GetNecklace().PV) + " -> " + (PlayerCC.GetMaxPv() + Necklaces[i + (5 * j)].PV + "\n");
-        Stats.text += PlayerCC.GetMaxPm() + (PCC.GetNecklace() == null ? 0 : PCC.GetNecklace().PM) + " -> " + (PlayerCC.GetMaxPm() + Necklaces[i + (5 * j)].PM);
+        // Si le dernier équipement est dans l'inventaire il doit remplacer l'avant dernier.
+        if (k == 13)
+        {
+            if (Necklaces[14].Qt >= 1)
+            {
+                equipID = 14;
+            }
+            else if (Necklaces[13].Qt >= 1)
+            {
+                equipID = k;
+            }
+        }
+        else
+        {
+            equipID = k;
+        }
+
+        int pv = PlayerCC.GetMaxPv() + Necklaces[equipID].PV - (Necklace == null ? 0 : Necklace.PV);
+        int pm = PlayerCC.GetMaxPm() + Necklaces[equipID].PM - (Necklace == null ? 0 : Necklace.PM);
+
+        Description.text = Necklaces[equipID].Name + "\n\n" + Necklaces[equipID].Description;
+        ItemImage.sprite = Necklaces[equipID].Sprite;
+
+        Stats01.text = PlayerCC.GetMaxPv() + " - " + pv + " (" + Necklaces[equipID].PV + ")";
+        Stats02.text = PlayerCC.GetMaxPm() + " - " + pm + " (" + Necklaces[equipID].PM + ")";
+
+        if (pv > PlayerCC.GetMaxPv())
+            Stats01.color = BlueColor;
+        else
+            Stats01.color = (pv == PlayerCC.GetMaxPv() ? BaseColor : RedColor);
+
+        if (pm > PlayerCC.GetMaxPm())
+            Stats02.color = BlueColor;
+        else
+            Stats02.color = (pm == PlayerCC.GetMaxPm() ? BaseColor : RedColor);
     }
 
     //Description des Accessoires
@@ -352,6 +492,9 @@ public class UI_Equipment: MonoBehaviour
             ItemImage.sprite = NoImage;
             return;
         }
+
+        Stats01.text = "";
+        Stats02.text = "";
 
         Description.text = Accessories[i].Name + "\n\n" + Accessories[i].Description;
         ItemImage.sprite = Accessories[i].Sprite;
@@ -430,15 +573,43 @@ public class UI_Equipment: MonoBehaviour
 
     private void Equip()
     {
+        // TO DO
+        // Quand on equipe une case vide il equipe la derniere arme ou armure survolée !! Corrigez ca !!
+
         switch (optInv)
         {
             case 0:
-                PCC.SetWeapon(Weapons[option]);
+                Sword = Weapons[equipID];
+                PCC.SetWeapon(Sword);
+                PCC.ActualisationStats();
+                DescriptionWeapon(option);
                 break;
 
             case 1:
-                PCC.SetArmor(Protecters[option]);
+                Armor = Protecters[equipID];
+                PCC.SetArmor(Armor);
+                PCC.ActualisationStats();
+                DescriptionProtecter(option);
                 break;
+
+            case 5:
+                //PCC.SetArmor(Protecters[option]);
+                break;
+
+            default:
+                Necklace = Necklaces[equipID];
+                PCC.SetNecklace(Necklace);
+                PCC.ActualisationStats();
+                DescriptionNecklace(option, optInv);
+                break;
+
         }
+        transform.GetComponentInParent<UI_Pause>().ActualisationPanels();
+        Debug.Log("Equipé avec: \n" + (PCC.GetWeapon() != null ? PCC.GetWeapon().Name : "RIEN") + " + " + (PCC.GetArmor() != null ? PCC.GetArmor().Name : "RIEN") + " + " + (PCC.GetNecklace() != null ? PCC.GetNecklace().Name : "RIEN"));
+    }
+
+    private void SetEquipCursor()
+    {
+
     }
 }

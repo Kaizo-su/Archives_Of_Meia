@@ -10,6 +10,9 @@ public class PlayerCC : MonoBehaviour {
     private static int MaxPm;
     private static int Pm;
 
+    private const int BASE_PV = 20;
+    private const int BASE_PM = 19;
+
     private int Atk;
 
     // Gestion du temps
@@ -24,7 +27,7 @@ public class PlayerCC : MonoBehaviour {
     public bool WorldMapCharacter = false;
 
     private bool canGetDammages = true;
-    private bool inAir = true;
+    private bool inAir = false;
     private bool isPaused = false;
 
     private Vector3 moveDirection = Vector3.zero;
@@ -54,31 +57,29 @@ public class PlayerCC : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        // Initialise le niveau qui commance à 0.
         Level = 1;
 
-        MaxPv = 25; // + 55 + 20; // Max 100
-        MaxPm = 20; // + 30; // Max 50
+        // Initialise les points de vie et de magie avant d'être
+        // augmenté par le niveau ou l'équipement.
+        MaxPv = BASE_PV; // + 55 + 20; // Max 100
+        MaxPm = BASE_PM; // + 30; // Max 50
 
-        Pv = MaxPv;
-        Pm = MaxPm;
-
+        // Initialise l'attaque selon l'équipement
         Atk = 0 + (Sword == null ? 0 : Sword.Atk);
 
+        // Désactive la pause
         Pause.SetActive(false);
 
         //An = GetComponent<Animator>();
         Cc = GetComponent<CharacterController>();
 
-        GameObject.Find("UI_PV").GetComponent<RectTransform>().sizeDelta = new Vector2(16 + ((MaxPv / 10f) * 32) + 48 + 12, 24);
-        GameObject.Find("UI_PM").GetComponent<RectTransform>().sizeDelta = new Vector2(16 + ((MaxPm / 10f) * 32) + 48 + 12, 24);
+        ActualisationStats();
+        ActualisationUI();
 
-        PvFill = GameObject.Find("UI_PV_Fill");
-        PvFill.GetComponent<RectTransform>().sizeDelta = new Vector2(((MaxPv / 10f) * 32), 18);
-        PvFill.GetComponent<UI_PV>().UpdatePv((float)Pv / MaxPv);
-
-        PmFill = GameObject.Find("UI_PM_Fill");
-        PmFill.GetComponent<RectTransform>().sizeDelta = new Vector2(((MaxPm / 10f) * 32), 18);
-        PmFill.GetComponent<UI_PV>().UpdatePv((float)Pm / MaxPm);
+        // En début de jeu on commence avec le maximum de point.
+        Pv = MaxPv;
+        Pm = MaxPm;
 
         time = 15;
         cooldown = time;
@@ -101,13 +102,18 @@ public class PlayerCC : MonoBehaviour {
         // ***
         // Déplacements
         // ***
+
+        // Si le joueur est au sol on enregistre la dernière plateforme qu'il a en dessous de lui.
         if (Cc.isGrounded)
         {
-            recovery.x = Mathf.Round(transform.position.x);
-            recovery.y = Mathf.Round(transform.position.y);
-            recovery.z = Mathf.Round(transform.position.z);
-
             inAir = false;
+
+            // Enregistre la position du dernier objet au sol pour en faire un point de résurection.
+            RaycastHit hit;
+            if (Physics.Raycast(P.transform.position, transform.TransformDirection(Vector3.down), out hit, 5))
+            {
+                recovery = new Vector3(hit.transform.position.x, hit.transform.position.y + 1, hit.transform.position.z);
+            }
 
             //An.SetBool("jump", Input.GetButton("Jump"));
             Vector3 moveDirection2 = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -123,15 +129,16 @@ public class PlayerCC : MonoBehaviour {
         }
         else
         {
+            // Si le personage ne touche plus le sol mais qu'il est au dessus d'une pente ou un escalier, alors on le colle au sol.
             if (!inAir && !Physics.Raycast(transform.position, Vector3.down * .025f, out _))
             {
                 moveDirection.y = jumpSpeed;
                 inAir = true;
             }
-            Debug.DrawRay(transform.position, Vector3.down * 2f, Color.yellow);
 
         }
 
+        // Si le personnage est en dessous de -2 sur l'axe des Y, on le renvoit au point de  réapparition
         if(GetComponent<Transform>().position.y <= -2)
         {
             transform.position = recovery;
@@ -193,7 +200,10 @@ public class PlayerCC : MonoBehaviour {
         SetOrientable(!isPaused);
         Pause.SetActive(isPaused);
         Pause.transform.GetChild(2).GetComponent<UI_Stat>().Actualisation();
-        Pause.GetComponent<UI_Pause>().ActualisationInventaires();
+        Pause.GetComponent<UI_Pause>().ActualisationPanels();
+
+        if (!isPaused)
+            ActualisationUI();
     }
 
     public void SetOrientable(bool p)
@@ -257,10 +267,38 @@ public class PlayerCC : MonoBehaviour {
         }
     }
 
+    // Actualise la vie et la magie du personnage selon le niveau et l'équipement.
+    public void ActualisationStats()
+    {
+        Atk = (Sword == null ? 0 : Sword.Atk);
+        MaxPv = BASE_PV + (Level * 5) + (Armor == null ? 0 : Armor.PV) + (Necklace == null ? 0 : Necklace.PV);
+        MaxPm = BASE_PM + Level + (Armor == null ? 0 : Armor.PM) + (Necklace == null ? 0 : Necklace.PM);
+    }
+
+    // Actualise le UI selon les stats du personnage.
+    public void ActualisationUI()
+    {
+        GameObject.Find("UI_PV").GetComponent<RectTransform>().sizeDelta = new Vector2(16 + ((MaxPv / 10f) * 32) + 48 + 12, 24);
+        GameObject.Find("UI_PM").GetComponent<RectTransform>().sizeDelta = new Vector2(16 + ((MaxPm / 10f) * 32) + 48 + 12, 24);
+
+        PvFill = GameObject.Find("UI_PV_Fill");
+        PvFill.GetComponent<RectTransform>().sizeDelta = new Vector2(((MaxPv / 10f) * 32), 18);
+        PvFill.GetComponent<UI_PV>().UpdatePv((float)Pv / MaxPv);
+
+        PmFill = GameObject.Find("UI_PM_Fill");
+        PmFill.GetComponent<RectTransform>().sizeDelta = new Vector2(((MaxPm / 10f) * 32), 18);
+        PmFill.GetComponent<UI_PV>().UpdatePv((float)Pm / MaxPm);
+    }
+
     // Getter-Setter
     public static int GetLevel()
     {
         return Level;
+    }
+
+    public static int GetBASEPV()
+    {
+        return BASE_PV;
     }
 
     public static int GetMaxPv()
@@ -272,7 +310,12 @@ public class PlayerCC : MonoBehaviour {
     {
         return Pv;
     }
-    
+
+    public static int GetBASEPM()
+    {
+        return BASE_PM;
+    }
+
     public static int GetMaxPm()
     {
         return MaxPm;

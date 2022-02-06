@@ -15,7 +15,7 @@ public class UI_Pause : MonoBehaviour
         Panels = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
             Panels[i] = transform.GetChild(i).transform;
-        ActualisationInventaires();
+        ActualisationPanels();
     }
 
     // Update is called once per frame
@@ -37,10 +37,12 @@ public class UI_Pause : MonoBehaviour
     }
 
     // Fonction qui met à jour tout les menus de l'interface de pause
-    public void ActualisationInventaires()
+    public void ActualisationPanels()
     {
         if (Panels == null)
             return;
+
+        Panels[2].GetComponent<UI_Stat>().Actualisation();
 
         //TO DO Afficher description d'items
 

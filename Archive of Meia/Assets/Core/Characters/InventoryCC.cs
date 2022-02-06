@@ -360,7 +360,7 @@ public class InventoryCC : MonoBehaviour
         Weapons.Add(new Weapon(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 2, 0, Sprites[2]));
         Weapons.Add(new Weapon(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 3, 0, Sprites[2]));
         Weapons.Add(new Weapon(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 4, 0, Sprites[2]));
-        Weapons.Add(new Weapon(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 5, 0, Sprites[2]));
+        Weapons.Add(new Weapon(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 5, 0, Sprites[6]));
 
         // Liste de colliers
         /* Colliers | 5 -> 20 */
@@ -372,21 +372,21 @@ public class InventoryCC : MonoBehaviour
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 6, 0, 200, Sprites[0]));
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 7, 5, 250, Sprites[0]));
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 8, 5, 290, Sprites[0]));
-        Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 8, 0, 310, Sprites[0]));
+        Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 9, 0, 310, Sprites[0]));
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 10, 5, 350, Sprites[0]));
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 11, 10, 400, Sprites[0]));
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 12, 10, 450, Sprites[0]));
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 13, 10, 500, Sprites[0]));
         Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 14, 15, 0, Sprites[0]));
-        Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 15, 20, 0, Sprites[0]));
+        Necklaces.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 15, 20, 0, Sprites[6]));
 
         // Liste d'armures
         /* Armures | 21 -> 25 */
         Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 0, 0, 10,  Sprites[1]));
-        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 1, 0, 80,  Sprites[1]));
-        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 2, 3, 160, Sprites[1]));
-        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 3, 5, 0,   Sprites[1]));
-        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 5, 10, 0,  Sprites[1]));
+        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 2, 0, 80,  Sprites[1]));
+        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 5, 5, 160, Sprites[1]));
+        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 8, 8, 0,   Sprites[1]));
+        Protecters.Add(new Protecter(WeaAndProStringTable[TheGameManager.lang, i++], WeaAndProStringTable[TheGameManager.lang, i++], 10, 10, 0,  Sprites[6]));
 
         i = 1;
 
