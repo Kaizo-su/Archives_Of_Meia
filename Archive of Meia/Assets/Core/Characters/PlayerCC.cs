@@ -57,6 +57,8 @@ public class PlayerCC : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        this.transform.position = TheGameManager.Dest;
+
         // Initialise le niveau qui commance à 0.
         Level = 1;
 
@@ -75,11 +77,12 @@ public class PlayerCC : MonoBehaviour {
         Cc = GetComponent<CharacterController>();
 
         ActualisationStats();
-        ActualisationUI();
 
         // En début de jeu on commence avec le maximum de point.
         Pv = MaxPv;
         Pm = MaxPm;
+
+        ActualisationUI();
 
         time = 15;
         cooldown = time;
@@ -196,14 +199,16 @@ public class PlayerCC : MonoBehaviour {
 
         InGame.SetActive(!isPaused);
         Time.timeScale = (isPaused ? 0 : 1);
-        Movable=!isPaused;
+        Movable = !isPaused;
         SetOrientable(!isPaused);
         Pause.SetActive(isPaused);
-        Pause.transform.GetChild(2).GetComponent<UI_Stat>().Actualisation();
         Pause.GetComponent<UI_Pause>().ActualisationPanels();
 
         if (!isPaused)
             ActualisationUI();
+        else
+            Pause.transform.GetChild(2).GetComponent<UI_Stat>().Actualisation();
+
     }
 
     public void SetOrientable(bool p)

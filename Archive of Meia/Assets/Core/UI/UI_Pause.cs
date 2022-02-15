@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_Pause : MonoBehaviour
 {
-    public static int option = 2;
+    public static int option;
 
     private Transform[] Panels;
 
@@ -12,6 +12,7 @@ public class UI_Pause : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        option = 2;
         Panels = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
             Panels[i] = transform.GetChild(i).transform;

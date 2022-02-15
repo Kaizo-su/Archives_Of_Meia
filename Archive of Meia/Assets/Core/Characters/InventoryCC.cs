@@ -185,13 +185,13 @@ public class InventoryCC : MonoBehaviour
     /*3 = Sublima nv2  4 = Sublima nv3                   */
     public bool SetWeapons(byte index, int amont)
     {
-        if (index >= KeyItems.Count)
+        if (index >= Weapons.Count)
             return false;
 
-        if (KeyItems[index].Qt + amont < 0)
+        if (Weapons[index].Qt + amont < 0)
             return false;
 
-        KeyItems[index].Qt += amont;
+        Weapons[index].Qt += amont;
 
         return true;
     }
@@ -216,16 +216,15 @@ public class InventoryCC : MonoBehaviour
     //
 
     //Gère la liste des armes
-    /*  TO DO                 */
     public bool SetProtecters(byte index, int amont)
     {
-        if (index >= KeyItems.Count)
+        if (index >= Protecters.Count)
             return false;
 
-        if (KeyItems[index].Qt + amont < 0)
+        if (Protecters[index].Qt + amont < 0)
             return false;
 
-        KeyItems[index].Qt += amont;
+        Protecters[index].Qt += amont;
 
         return true;
     }
@@ -250,7 +249,6 @@ public class InventoryCC : MonoBehaviour
     //
 
     //Gère la liste des collier
-    /*  TO DO                 */
     public bool SetNecklaces(byte index, int amont)
     {
         if (index >= Necklaces.Count)
@@ -284,7 +282,6 @@ public class InventoryCC : MonoBehaviour
     //
 
     //Gère la liste des accessoires
-    /*  TO DO                 */
     public bool SetAccessories(byte index, int amont)
     {
         if (index >= Accessories.Count)

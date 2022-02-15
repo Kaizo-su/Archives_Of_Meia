@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -11,6 +10,7 @@ public class Teleport : MonoBehaviour
     public byte typeView;       // 0 = Pas de changement --- 1 = WorldMap --- 2 = Interior --- 3 = Exterior
     //public byte light;          // 0 = Off --- 1 = On --- Pas de changemant
     public bool UseButtunToTeleport;
+    public Vector3 Arrival;
 
     private GameObject P;
     private GameObject G;
@@ -125,6 +125,7 @@ public class Teleport : MonoBehaviour
         }
         else
         {
+            TheGameManager.Dest = Arrival;
             SceneManager.LoadScene(Destination);
         }
 

@@ -10,7 +10,13 @@ public class TheGameManager : MonoBehaviour
     /* Système et Options */
     /**********************/
 
-    public static byte lang = 1;                //Langue, colone des tableaux de dialogue
+    public static byte lang = 1;                // Langue, colone des tableaux de dialogue
+
+    /**********************/
+    /*   Teleportation    */
+    /**********************/
+
+    public static Vector3 Dest = new Vector3(-12, 7, 0); //Vector3.zero;  // Points d'arrivée dans une autre scene via un teleporteur
 
     /**********************/
     /*      Coffres       */
@@ -18,5 +24,23 @@ public class TheGameManager : MonoBehaviour
 
     //Coffres
 
-    public static int[] Coffres = new int[100];
+    public static bool[] Coffres = new bool[100];
+
+    /**********************/
+    /*      Events        */
+    /**********************/
+
+    //Evenements
+
+    public static bool[] Events = new bool[100];
+
+    /*  Liste des Evenements
+     *  
+     *  0 = EV_Ship01_01 / map = Ship01
+     * 
+     * 
+     * 
+     * 
+     */
+
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,9 +20,7 @@ public class PNJ : MonoBehaviour
     private GameObject DialogueBox;
     private float[] TextRGB = new float[3];
 
-    private string[] stringTable;
     private string[,] TextTable;
-    private string textFile;
 
     //[TextArea(3, 15)]
     //private string[] dialogue;
@@ -45,47 +42,7 @@ public class PNJ : MonoBehaviour
         DialogueName.GetComponent<Text>().color = new Color(TextRGB[0], TextRGB[1], TextRGB[2], 0);
         DialogueBox.GetComponent<Image>().color = new Color(TextRGB[0], TextRGB[1], TextRGB[2], 0);
 
-        int x = 0;
-        int y = 0;
-        int l = 0;
-
-        //Recupere le texte du fichier
-        if(File == null)
-        {
-            textFile = "NO FILE";
-        }
-        else
-        {
-            textFile = File.ToString();
-        }
-
-        //Repaire toute les entrees du texte
-        stringTable = textFile.Split(';', '\n');
-
-        //Calcule le nombre de colone et de ligne
-        for (int i = 0; i < File.ToString().Length; i++)
-        {
-            if (textFile[i] == '\n' ){
-                y++;
-            }
-            if (textFile[i] == ';')
-            {
-                x++;
-            }
-        }
-
-        //Declare un tableau selon les ligne et les colones
-        TextTable = new string[(x / y) + 1, y];
-
-        //Remplis le tableau avec les entrees de textes
-        for (int j = 0; j < y; j++)
-        {
-            for (int k = 0; k < (x/y) + 1; k++)
-            {
-                TextTable[k,j] = stringTable[l];
-                l++;
-            }
-        }
+        TextTable = TheDialogueManager.TextExtractor(File);
     }   
     void Update()
 

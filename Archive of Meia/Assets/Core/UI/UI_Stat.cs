@@ -30,7 +30,7 @@ public class UI_Stat : MonoBehaviour
 
     private void Start()
     {
-        Actualisation();
+        
     }
 
     // Update is called once per frame

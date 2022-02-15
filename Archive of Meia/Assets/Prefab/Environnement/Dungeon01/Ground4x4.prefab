@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4100704155204527947}
   - component: {fileID: 4100704155204527948}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Ground4x4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4100704155204527949}
-  m_Mesh: {fileID: 1453043773871479701, guid: 815b2f488f9f49844b31d36def7db1d3, type: 3}
+  m_Mesh: {fileID: -2113615259206464529, guid: 739e96c1b2e803c42b81786629590909, type: 3}
 --- !u!23 &4100704155204527947
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 143d63d0ec728f44986f6c6fa5b4bc48, type: 2}
+  - {fileID: -8352778583899543811, guid: 739e96c1b2e803c42b81786629590909, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,4 +95,4 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1453043773871479701, guid: 815b2f488f9f49844b31d36def7db1d3, type: 3}
+  m_Mesh: {fileID: -2113615259206464529, guid: 739e96c1b2e803c42b81786629590909, type: 3}

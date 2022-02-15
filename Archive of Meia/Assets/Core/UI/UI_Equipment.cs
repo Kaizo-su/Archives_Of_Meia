@@ -22,7 +22,9 @@ public class UI_Equipment: MonoBehaviour
     private Sprite NoImage;
 
     public GameObject UI_Item;
-    public GameObject UI_Equiped;
+
+    private Transform[] UI_EquipedCursor = new Transform[4];
+    private static byte[] EquipCursorIndex = new byte[] { 99, 99, 99, 99 };
 
     // Gestion du personnage
     private PlayerCC PCC;
@@ -97,7 +99,7 @@ public class UI_Equipment: MonoBehaviour
         }
         //Weapons[4].Qt = 0;
         //Weapons[3].Qt = 0;
-        //Weapons[2].Qt = 0;
+        Weapons[0].Qt = 0;
 
         for (int i = 0; i < Protecters.Count; i++)
         {
@@ -118,12 +120,18 @@ public class UI_Equipment: MonoBehaviour
             Necklaces[i].Qt = 1;
         }
 
-        //Necklaces[14].Qt = 0;
+        //Necklaces[14].Qt = 0;*/
 
         DisplayWeapons();
         DisplayProtecters();
         DisplayNecklaces();
         DisplayAccessories();
+
+        UI_EquipedCursor[0] = transform.GetChild(13).transform;
+        UI_EquipedCursor[1] = transform.GetChild(14).transform;
+        UI_EquipedCursor[2] = transform.GetChild(15).transform;
+        UI_EquipedCursor[3] = transform.GetChild(16).transform;
+        SetEquipCursor(false);
 
         Debug.Log("Equipé avec: " + (PCC.GetWeapon() != null ? PCC.GetWeapon().Name : "RIEN") + " + " + (PCC.GetArmor() != null ? PCC.GetArmor().Name : "RIEN"));
     }
@@ -134,7 +142,7 @@ public class UI_Equipment: MonoBehaviour
         // Activer/Desactiver la pause
         if (Input.GetButtonDown("Jump"))
         {
-            DestroyInventory();
+            DestroyEquipment();
             PCC.TogglePauseGame();
         }
 
@@ -148,7 +156,7 @@ public class UI_Equipment: MonoBehaviour
             
         }
 
-        // Déplacement du curseur dans l'inventaire des objets consomables
+        // Déplacement du curseur dans l'inventaire des objets.
         if ((Input.GetKeyDown(KeyCode.D) || (Input.GetAxis("Horizontal") >= 0.5f) && waiting == cooldown && UI_Pause.option == 1))
         {
             InventoryManager(1, 0);
@@ -196,7 +204,7 @@ public class UI_Equipment: MonoBehaviour
             g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
             g.transform.SetParent(this.transform);
             g.transform.localScale = new Vector3(1, 1, 1);
-            g.transform.localPosition = new Vector3(posX + (i * 64), posY);
+            g.transform.localPosition = new Vector2(posX + (i * 64), posY);
             g.name = "Weap" + i;
             g.GetComponent<Image>().sprite = Weapons[i].Sprite;
             g.transform.GetChild(0).GetComponent<Text>().text = "";
@@ -241,7 +249,7 @@ public class UI_Equipment: MonoBehaviour
             g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
             g.transform.SetParent(this.transform);
             g.transform.localScale = new Vector3(1, 1, 1);
-            g.transform.localPosition = new Vector3(posX + (i * 64), posY - 80);
+            g.transform.localPosition = new Vector2(posX + (i * 64), posY - 80);
             g.name = "Protect" + i;
             g.GetComponent<Image>().sprite = Protecters[i].Sprite;
             g.transform.GetChild(0).GetComponent<Text>().text = Protecters[i].Qt.ToString();
@@ -255,7 +263,7 @@ public class UI_Equipment: MonoBehaviour
             g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
             g.transform.SetParent(this.transform);
             g.transform.localScale = new Vector3(1, 1, 1);
-            g.transform.localPosition = new Vector3(posX + (3 * 64), posY - 80);
+            g.transform.localPosition = new Vector2(posX + (3 * 64), posY - 80);
             g.name = "Protect" + indexID;
             g.GetComponent<Image>().sprite = Protecters[indexID].Sprite;
             g.transform.GetChild(0).GetComponent<Text>().text = "";
@@ -269,7 +277,6 @@ public class UI_Equipment: MonoBehaviour
 
         int nbObjets = Necklaces.Count - 2;
         int k = 0;
-        int indexID = 0;
 
         // Affiche touts les colliers sauf le dernier.
         for (int i = 0; i < 3; i++)
@@ -285,7 +292,7 @@ public class UI_Equipment: MonoBehaviour
                 g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
                 g.transform.SetParent(this.transform);
                 g.transform.localScale = new Vector3(1, 1, 1);
-                g.transform.localPosition = new Vector3(posX + (j * 64), posY - 160 - (i * 64));
+                g.transform.localPosition = new Vector2(posX + (j * 64), posY - 160 - (i * 64));
                 g.name = "Acc" + i;
                 g.GetComponent<Image>().sprite = Necklaces[j + (5 * i)].Sprite;
                 g.transform.GetChild(0).GetComponent<Text>().text = Necklaces[j + (5 * i)].Qt.ToString();
@@ -296,7 +303,7 @@ public class UI_Equipment: MonoBehaviour
         //Affiche la dernière selon certaines conditions.
         if (Necklaces[13].Qt == 1 || Necklaces[14].Qt == 1)
         {
-            indexID = (Necklaces[14].Qt == 1 ? 14 : 13);
+            int indexID = (Necklaces[14].Qt == 1 ? 14 : 13);
 
             g = Instantiate(UI_Item, Vector2.zero, new Quaternion());
             g.transform.SetParent(this.transform);
@@ -500,9 +507,9 @@ public class UI_Equipment: MonoBehaviour
         ItemImage.sprite = Accessories[i].Sprite;
     }
 
-    public void DestroyInventory()
+    public void DestroyEquipment()
     {
-        GameObject[] UI = GameObject.FindGameObjectsWithTag("UI_Item");
+        GameObject[] UI = GameObject.FindGameObjectsWithTag("UI_Equip");
 
         for (int i = 0; i < UI.Length; i++)
         {
@@ -579,6 +586,10 @@ public class UI_Equipment: MonoBehaviour
         switch (optInv)
         {
             case 0:
+                if(Weapons[equipID] == null || Weapons[equipID].Qt == 0){
+                    return;
+                }
+
                 Sword = Weapons[equipID];
                 PCC.SetWeapon(Sword);
                 PCC.ActualisationStats();
@@ -586,6 +597,10 @@ public class UI_Equipment: MonoBehaviour
                 break;
 
             case 1:
+                if (Protecters[equipID] == null || Protecters[equipID].Qt == 0)
+                {
+                    return;
+                }
                 Armor = Protecters[equipID];
                 PCC.SetArmor(Armor);
                 PCC.ActualisationStats();
@@ -597,6 +612,10 @@ public class UI_Equipment: MonoBehaviour
                 break;
 
             default:
+                if (Necklaces[equipID] == null || Necklaces[equipID].Qt == 0)
+                {
+                    return;
+                }
                 Necklace = Necklaces[equipID];
                 PCC.SetNecklace(Necklace);
                 PCC.ActualisationStats();
@@ -605,11 +624,61 @@ public class UI_Equipment: MonoBehaviour
 
         }
         transform.GetComponentInParent<UI_Pause>().ActualisationPanels();
+        SetEquipCursor(true);
         Debug.Log("Equipé avec: \n" + (PCC.GetWeapon() != null ? PCC.GetWeapon().Name : "RIEN") + " + " + (PCC.GetArmor() != null ? PCC.GetArmor().Name : "RIEN") + " + " + (PCC.GetNecklace() != null ? PCC.GetNecklace().Name : "RIEN"));
     }
 
-    private void SetEquipCursor()
+    // Positionne les curseurs d'inventaires selon l'équipement du joueur
+    private void SetEquipCursor(bool Equip)
     {
+
+        // Equipe l'élément selon l'Equip ID
+
+        if (Equip)
+        {
+            switch (optInv)
+            {
+                case 0:
+                    UI_EquipedCursor[0].localPosition = new Vector2(posX + ((equipID > 2 ? 2 : equipID) * 64), posY);
+                    EquipCursorIndex[0] = byte.Parse((equipID > 2 ? 2 : equipID).ToString());
+                    Debug.Log(new Vector2(posX + (equipID * 64), posY));
+                    break;
+
+                case 1:
+                    UI_EquipedCursor[1].localPosition = new Vector2(posX + ((equipID > 3 ? 3 : equipID) * 64), posY - 80);
+                    EquipCursorIndex[1] = byte.Parse((equipID > 3 ? 3 : equipID).ToString());
+                    Debug.Log(new Vector2(posX + (equipID * 64), posY));
+                    break;
+
+                case 5:
+                    // Pour les accerssoires. TO DO
+                    break;
+
+                default:
+                    int x = ((equipID > 13 ? 13 : equipID) % 5) * 64;
+                    int y = ((equipID/5) % 3) * 64;
+
+                    Debug.Log((equipID > 13 ? 13 : equipID));
+                    UI_EquipedCursor[2].localPosition = new Vector2(posX + x, posY - 160 - y);
+                    EquipCursorIndex[2] = byte.Parse((equipID > 13 ? 13 : equipID).ToString());
+                    break;
+            }
+        }
+        else
+        {
+            if (EquipCursorIndex[0] != 99)
+                UI_EquipedCursor[0].localPosition = new Vector2(posX + ((EquipCursorIndex[0] > 2 ? 2 : EquipCursorIndex[0]) * 64), posY);
+
+            if (EquipCursorIndex[1] != 99)
+                UI_EquipedCursor[1].localPosition = new Vector2(posX + ((EquipCursorIndex[1] > 3 ? 3 : EquipCursorIndex[1]) * 64), posY - 80);
+
+            if (EquipCursorIndex[2] != 99)
+            {
+                int x = ((EquipCursorIndex[2] > 13 ? 13 : EquipCursorIndex[2]) % 5) * 64;
+                int y = ((EquipCursorIndex[2] / 5) % 3) * 64;
+                UI_EquipedCursor[2].localPosition = new Vector2(posX + x, posY - 160 - y);
+            }
+        }
 
     }
 }
