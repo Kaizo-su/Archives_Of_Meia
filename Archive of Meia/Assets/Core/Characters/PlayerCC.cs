@@ -57,7 +57,7 @@ public class PlayerCC : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        this.transform.position = TheGameManager.Dest;
+        //this.transform.position = TheGameManager.Dest;
 
         // Initialise le niveau qui commance à 0.
         Level = 1;
