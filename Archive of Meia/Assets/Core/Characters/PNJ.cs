@@ -5,8 +5,8 @@ using UnityEngine.UI;
 //[CreateAssetMenu(fileName = "PNJ_Default", menuName = "PNJ settings")]
 public class PNJ : MonoBehaviour
 {
-    public TextAsset File;
-
+    [SerializeField]
+    private TextAsset File;
     [SerializeField]
     private string Name;
     [SerializeField]
@@ -22,10 +22,6 @@ public class PNJ : MonoBehaviour
 
     private string[,] TextTable;
 
-    //[TextArea(3, 15)]
-    //private string[] dialogue;
-
-    // Start is called before the first frame update
 
     void Start()
     {

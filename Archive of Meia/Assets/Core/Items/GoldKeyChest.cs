@@ -50,4 +50,9 @@ public class GoldKeyChest : Chest
             StartCoroutine(Opening());
         }
     }
+
+    protected override string WhatInsideChest()
+    {
+        return "" + GameObject.Find("Player").GetComponent<InventoryCC>().GetKeyItem(1).Name;
+    }
 }

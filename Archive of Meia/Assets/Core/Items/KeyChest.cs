@@ -13,4 +13,9 @@ public class KeyChest : Chest
     {
         lootKeyItem();
     }
+
+    protected override string WhatInsideChest()
+    {
+        return "" + GameObject.Find("Player").GetComponent<InventoryCC>().GetKeyItem(0).Name;
+    }
 }

@@ -93,7 +93,7 @@ public class UI_Equipment: MonoBehaviour
         Armor = PCC.GetArmor();
         Necklace = PCC.GetNecklace();
 
-        for (int i = 0; i < Weapons.Count; i++)
+        /*for (int i = 0; i < Weapons.Count; i++)
         {
             Weapons[i].Qt = 1;
         }
@@ -153,7 +153,11 @@ public class UI_Equipment: MonoBehaviour
         if (Input.GetButtonDown("Fire2") && UI_Pause.option == 1)
         {
             Equip();
-            
+
+            DisplayWeapons();
+            DisplayProtecters();
+            DisplayNecklaces();
+            DisplayAccessories();
         }
 
         // Déplacement du curseur dans l'inventaire des objets.

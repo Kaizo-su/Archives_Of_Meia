@@ -1469,15 +1469,15 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 48
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eu velit
-    ut purus commodo faucibus. Nam maximus tortor risus. Vestibulum consequat dictum
-    erat.
+    m_LineSpacing: 1.1
+  m_Text: "Ligne 1 de la boite de Dialogue longue comme \xE7a.\nLigne 2 de la boite
+    de Dialogue longue comme \xE7a.\nLigne 3 de la boite de Dialogue longue comme
+    \xE7a.\nLigne 4de la boite de Dialogue longue comme \xE7a."
 --- !u!114 &2652530615678932851
 MonoBehaviour:
   m_ObjectHideFlags: 0

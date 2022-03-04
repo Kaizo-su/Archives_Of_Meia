@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd6fcf6876fc4e4b88a2fd08528451e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  File: {fileID: 4900000, guid: 611881ad038e48249a1130a7c105a866, type: 3}
+  DialoguesIndex: 01000000
   IndexObjet: 0
   TypeObjet: 0
 --- !u!1 &9158962027725944604

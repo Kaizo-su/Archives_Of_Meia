@@ -204,4 +204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4119216ce301eb64db14815ac8ccfe46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  File: {fileID: 4900000, guid: 611881ad038e48249a1130a7c105a866, type: 3}
+  DialoguesIndex: 0200000003000000
   cash: 50

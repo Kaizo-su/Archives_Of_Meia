@@ -6,13 +6,15 @@ public class MoneyChest : Chest
 
     public int cash;
 
-    /*private void AddCash(int p)
-    {
-        //GameObject.Find("Player").GetComponent<InventoryCC>().SetMoney(p);
-    }*/
 
     protected override void loot()
     {
+        isMoneyChest = true;
         GameObject.Find("Player").GetComponent<InventoryCC>().SetMoney(cash);
+    }
+
+    protected override string WhatInsideChest()
+    {
+        return "" + cash;
     }
 }

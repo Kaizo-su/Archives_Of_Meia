@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a66c71591bb4d643bf92d2db4a57b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  File: {fileID: 4900000, guid: 611881ad038e48249a1130a7c105a866, type: 3}
+  DialoguesIndex: 01000000
 --- !u!1 &4480650727916673129
 GameObject:
   m_ObjectHideFlags: 0

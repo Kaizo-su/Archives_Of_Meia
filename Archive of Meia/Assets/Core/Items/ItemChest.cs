@@ -9,13 +9,21 @@ public class ItemChest : Chest
 
     public byte IndexObjet;
 
+    private byte param = 0;
+
     private void lootItem(byte p)
     {
+        param = p;
         GameObject.Find("Player").GetComponent<InventoryCC>().SetItems(p, 1);
     }
 
     protected override void loot()
     {
         lootItem(IndexObjet);
+    }
+
+    protected override string WhatInsideChest()
+    {
+        return "" + GameObject.Find("Player").GetComponent<InventoryCC>().GetItems(param).Name;
     }
 }

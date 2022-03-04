@@ -1,11 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TheDialogueManager : MonoBehaviour
 {
     // Regroupe toutes les variables et les fonction de gestion de texte
 
+    // Extrait le texte et le renvoie dans une String
     public static string[,] TextExtractor(TextAsset File)
     {
         string textFile;
@@ -47,4 +48,5 @@ public class TheDialogueManager : MonoBehaviour
         }
         return TextTable;
     }
+
 }
