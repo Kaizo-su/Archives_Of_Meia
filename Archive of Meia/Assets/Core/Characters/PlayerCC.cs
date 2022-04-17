@@ -155,30 +155,35 @@ public class PlayerCC : MonoBehaviour {
         // ***
         // Coups d'épée
         // ***
-        if (Input.GetButtonDown("Fire3") && cooldown == time )
+        if(GetWeapon() != null)
         {
-            cooldown = 0;
-            E.SetActive(true);
-            C.GetComponent<PlayerOrientation>().SetOrientable(false);
-            Movable = false;
+            if (Input.GetButtonDown("Fire3") && cooldown == time)
+            {
+                cooldown = 0;
+                E.SetActive(true);
+                C.GetComponent<PlayerOrientation>().SetOrientable(false);
+                Movable = false;
 
+            }
+
+            if (cooldown == time - 1)
+            {
+                Movable = true;
+                C.GetComponent<PlayerOrientation>().SetOrientable(true);
+            }
+
+            if (cooldown == (int)time / 3)
+            {
+                E.SetActive(false);
+            }
+
+            if (cooldown < time)
+            {
+                cooldown++;
+            }
         }
 
-        if (cooldown == time - 1)
-        {
-            Movable = true;
-            C.GetComponent<PlayerOrientation>().SetOrientable(true);
-        }
-
-        if (cooldown == (int) time/3)
-        {
-            E.SetActive(false);
-        }
-
-        if (cooldown < time )
-        {
-            cooldown++;
-        }
+        
 
         if (Input.GetButtonDown("Jump"))
         {
