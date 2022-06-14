@@ -24,12 +24,15 @@ public class PlayerCC : MonoBehaviour {
     public float jumpSpeed = 4f;
     public float gravity = 17f;
 
-    public bool WorldMapCharacter = false;
-
+    // Interupteurs
+    [SerializeField]
+    private bool worldMapCharacter = false;
+    private bool orientable = true;
     private bool canGetDammages = true;
     private bool inAir = false;
     private bool isPaused = false;
 
+    // Vecteurs
     private Vector3 moveDirection = Vector3.zero;
     private Vector3 recovery = Vector3.zero;
 
@@ -47,6 +50,9 @@ public class PlayerCC : MonoBehaviour {
     private static Weapon Sword;
     private static Protecter Armor;
     private static Protecter Necklace;
+
+    // Valeurs
+    private float axe = 0.1f;
 
     private void Awake()
     {
@@ -97,7 +103,7 @@ public class PlayerCC : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (WorldMapCharacter)
+        if (worldMapCharacter)
         {
             probeBehaviour();
         }
@@ -141,8 +147,20 @@ public class PlayerCC : MonoBehaviour {
 
         }
 
+        // Orientation
+        if (Input.GetAxis("Horizontal") > axe || Input.GetAxis("Horizontal") < -axe ||
+            Input.GetAxis("Vertical") > axe || Input.GetAxis("Vertical") < -axe)
+        {
+            if (orientable)
+            {
+                //transform.rotation = Quaternion.Euler(-90, (Mathf.Atan2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * Mathf.Rad2Deg) + 90, 0);
+                C.transform.rotation = Quaternion.Euler(0, Mathf.Atan2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * Mathf.Rad2Deg, 0);
+                //this.transform.LookAt(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")));
+            }
+        }
+
         // Si le personnage est en dessous de -2 sur l'axe des Y, on le renvoit au point de  réapparition
-        if(GetComponent<Transform>().position.y <= -2)
+        if (GetComponent<Transform>().position.y <= -2)
         {
             transform.position = recovery;
         }
@@ -214,11 +232,6 @@ public class PlayerCC : MonoBehaviour {
         else
             Pause.transform.GetChild(2).GetComponent<UI_Stat>().Actualisation();
 
-    }
-
-    public void SetOrientable(bool p)
-    {
-        C.GetComponent<PlayerOrientation>().SetOrientable(p);
     }
 
     public void Hit(int amount)
@@ -369,6 +382,10 @@ public class PlayerCC : MonoBehaviour {
     public Protecter GetNecklace()
     {
         return Necklace;
+    }
+    public void SetOrientable(bool p)
+    {
+        orientable = p;
     }
 
     public bool Movable { get; set; }

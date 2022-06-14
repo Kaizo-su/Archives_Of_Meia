@@ -613,8 +613,8 @@ TextureImporter:
       name: IconsItems_21
       rect:
         serializedVersion: 2
-        x: 588
-        y: 0
+        x: 980
+        y: 392
         width: 196
         height: 196
       alignment: 0
@@ -634,8 +634,8 @@ TextureImporter:
       name: IconsItems_22
       rect:
         serializedVersion: 2
-        x: 784
-        y: 0
+        x: 1176
+        y: 392
         width: 196
         height: 196
       alignment: 0
@@ -655,8 +655,8 @@ TextureImporter:
       name: IconsItems_23
       rect:
         serializedVersion: 2
-        x: 980
-        y: 0
+        x: 1372
+        y: 392
         width: 196
         height: 196
       alignment: 0
@@ -676,8 +676,8 @@ TextureImporter:
       name: IconsItems_24
       rect:
         serializedVersion: 2
-        x: 1176
-        y: 0
+        x: 0
+        y: 196
         width: 196
         height: 196
       alignment: 0
@@ -697,8 +697,8 @@ TextureImporter:
       name: IconsItems_25
       rect:
         serializedVersion: 2
-        x: 1372
-        y: 0
+        x: 196
+        y: 196
         width: 196
         height: 196
       alignment: 0

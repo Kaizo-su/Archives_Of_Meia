@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Master
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 1
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 7302be1872b668643aad20a76a962666, type: 3}
+    totalSpriteSurfaceArea: 998816
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -8150495748064878817, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 1856581566878510745, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -6091841076241520493, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 424286962831273478, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 5112461652078545001, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -7366183714388635122, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 6323778840431687801, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 3422032618824438076, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 8500562070631041005, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -5906673401247492782, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 1219981039878072558, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 3112320317697415536, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 29351412485415607, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 9192451297841583349, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -6829767303298349719, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 3791589601196840834, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 5093684199828606765, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -1298102081554037458, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -509382918382983831, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -3977717486009777929, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 2961468870896051351, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -4252849737243813779, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -8628129743195740482, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: -302392579494394378, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 9164383206068877859, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  - {fileID: 4120861772517533235, guid: 7302be1872b668643aad20a76a962666, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - IconsItems_4
+  - IconsItems_5
+  - IconsItems_6
+  - IconsItems_7
+  - IconsItems_0
+  - IconsItems_1
+  - IconsItems_2
+  - IconsItems_3
+  - IconsItems_8
+  - IconsItems_9
+  - IconsItems_19
+  - IconsItems_18
+  - IconsItems_17
+  - IconsItems_16
+  - IconsItems_15
+  - IconsItems_14
+  - IconsItems_13
+  - IconsItems_12
+  - IconsItems_11
+  - IconsItems_10
+  - IconsItems_22
+  - IconsItems_23
+  - IconsItems_20
+  - IconsItems_21
+  - IconsItems_24
+  - IconsItems_25
+  m_RenderDataMap: {}
+  m_Tag: Master
+  m_IsVariant: 0
